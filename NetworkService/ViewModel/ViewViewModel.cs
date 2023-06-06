@@ -2,8 +2,7 @@
 using NetworkService.Model;
 using System;
 using System.Collections.ObjectModel;
-using Assets.File;
-
+using System.lO;
 
 namespace NetworkService.ViewModel
 {

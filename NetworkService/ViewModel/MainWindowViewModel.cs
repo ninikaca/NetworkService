@@ -1,4 +1,5 @@
 ﻿using NetworkService.Helpers;
+using NetworkService.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,30 +14,23 @@ namespace NetworkService.ViewModel
 {
     public class MainWindowViewModel : BindableBase
     {
-        #region NAVIGACIONE KOMANDE
-        public MyICommand<string> NavCommand { get; private set; } // za menjannje menija
-        #endregion
-
-        #region VIEW MODEL INSTANCE
+        // za menjannje menija
+        public MyICommand<string> NavCommand { get; private set; }
+        
+        //view model instance
         public HomeViewModel homeViewModel;
         public EntitiesViewModel entitiesViewModel;
         public GraphsViewModel graphsViewModel;
         public static ViewViewModel viewViewModel;
-        #endregion
 
-        #region TRENUTNO PRIKAZAN VIEW MODEL
+        //trenutni view model
         private BindableBase currentViewModel;
-        #endregion
 
-        #region LISTA I BROJ MREZNIH ENTITETA
-        // ovo je lista gde ces cuvati sve te svoje entitete, kada u model napravis tu klasu koja modeluje
-        // ovde uncomment i dalje idi. daniel
-       // public static ObservableCollection<TvojaKlasa> TvojaKlasa { get; set; }
-        #endregion
+        //lista mreznih entiteta
+        public static ObservableCollection<Entity> Entities { get; set; }
 
-        private int count = 15; // Inicijalna vrednost broja objekata u sistemu
-                                // ######### ZAMENITI stvarnim brojem elemenata
-                                //           zavisno od broja entiteta u listi
+        //informacija / poruka
+        private string mess;
 
         public MainWindowViewModel()
         {
@@ -84,7 +78,7 @@ namespace NetworkService.ViewModel
                              * duzinu liste koja sadrzi sve objekte pod monitoringom, odnosno
                              * njihov ukupan broj (NE BROJATI OD NULE, VEC POSLATI UKUPAN BROJ)
                              * */
-                            Byte[] data = System.Text.Encoding.ASCII.GetBytes(count.ToString());
+                            Byte[] data = System.Text.Encoding.ASCII.GetBytes(Entities.Count.ToString());
                             stream.Write(data, 0, data.Length);
                         }
                         else
