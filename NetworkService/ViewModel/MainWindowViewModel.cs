@@ -177,20 +177,6 @@ namespace NetworkService.ViewModel
             listeningThread.Start();
         }
 
-        // za promenu views
-        public BindableBase CurrentViewModel
-        {
-            get 
-            { 
-                return currentViewModel; 
-            }
-
-            set
-            {
-                SetProperty(ref currentViewModel, value);
-            }
-        }
-
         private void OnNav(string destination)
         {
             switch (destination)
@@ -212,94 +198,54 @@ namespace NetworkService.ViewModel
 
         private void AddToList(Entity newEnt)
         {
-            Entity.Add(newEnt);
+            Entities.Add(newEnt);
 
             //da zaobidjemo beskonacni poziv
-            Messenger.Default.Send(new Helpers.Converter() { Entity = newEnt });
+            Messenger.Default.Send(new Forwarder() { Entity = newEnt });
         }
 
         private void RemoveFromList(int index)
         {
-            int idx = Entiteti[index].Canvas_pozicija;
-            Entiteti.RemoveAt(index);
+            int ind = Entities[index].PositionOnCanvas;
+            Entities.RemoveAt(index);
 
-            if (idx != -1)
+            if (ind != -1)
             {
-                Messenger.Default.Send(idx);
+                Messenger.Default.Send(ind);
             }
         }
 
-        private void GetList(ObservableCollection<Entitet> e)
+        private void GetList(ObservableCollection<Entity> e)
         {
-            e = Entiteti;
+            e = Entities;
         }
 
-        public void OnAdd()
+        // za promenu views
+        public BindableBase CurrentViewModel
         {
-            OdabraniEntitet = null;
-            ListaEntiteta = MainWindowViewModel.Entiteti;
-
-            // CG1 - Na osnovu odabrane adresne klase kreira random entitet
-
-            // novi id je trenutni najveci id + 1
-            int max_id = ListaEntiteta.Count != 0 ? ListaEntiteta.Max(x => x.Id) + 1 : 1;
-
-            int odabrana_adresna_klasa = OdabraniIndeksDodavanjeEntiteta;
-            const int ip_min = 0, ip_max = 255;
-            int ip_prvi_oktet, ip_drugi_oktet, ip_treci_oktet, ip_cetvrti_oktet;
-            string ip, klasa;
-
-            // generisanje na osnovu odabrane adresne klase
-            switch (odabrana_adresna_klasa)
+            get
             {
-                case 0: ip_prvi_oktet = new Random().Next(1, 127); klasa = "A"; break;
-                case 1: ip_prvi_oktet = new Random().Next(128, 191); klasa = "B"; break;
-                case 2: ip_prvi_oktet = new Random().Next(192, 223); klasa = "C"; break;
-                case 3: ip_prvi_oktet = new Random().Next(224, 239); klasa = "D"; break;
-                case 4: ip_prvi_oktet = new Random().Next(240, 255); klasa = "E"; break;
-                default: ip_prvi_oktet = 0; klasa = "A"; break;
+                return currentViewModel;
             }
 
-            ip_drugi_oktet = new Random().Next(ip_min, ip_max);
-            Thread.Sleep(50);
-            ip_treci_oktet = new Random().Next(ip_min, ip_max);
-            Thread.Sleep(50);
-            ip_cetvrti_oktet = new Random().Next(ip_min, ip_max);
-
-            ip = ip_prvi_oktet + "." + ip_drugi_oktet + "." + ip_treci_oktet + "." + ip_cetvrti_oktet;
-            string naziv = "Entitet " + (max_id < 10 ? ("0" + max_id).ToString() : max_id.ToString());
-
-            Messenger.Default.Send(
-                new Entitet()
-                {
-                    Id = max_id,
-                    Naziv = naziv,
-                    IP = ip,
-                    Slika = "/Assets/uredjaj.png",
-                    Zauzece = new Random().Next(0, 100),
-                    Klasa = klasa,
-                    Canvas_pozicija = -1,
-                    //Povezan_sa_entitet_id = -1
-                });
-
-            // informativna poruka
-            Uspesno = Visibility.Visible;
-            Poruka = "ℹ Novi entitet (" + max_id + ", " + naziv + ", " + ip + ") je uspešno dodat u infrastrukturni sistem!";
+            set
+            {
+                SetProperty(ref currentViewModel, value);
+            }
         }
 
-        public void OnBrisanjePress()
+        void Delimit_File(string str)
         {
-            int id = OdabraniEntitet.Id;
-            string naziv = OdabraniEntitet.Naziv;
-            string ip = OdabraniEntitet.IP;
-
-            Messenger.Default.Send(ListaEntiteta.IndexOf(OdabraniEntitet));
-            OdabraniEntitet = null;
-            Messenger.Default.Send(ListaEntiteta);
-
-            // poruka korisniku
-            Greska = Visibility.Visible;
-            Poruka = "❎ Entitet (" + id + ", " + naziv + ", " + ip + ") je uspešno izbrisan iz infrastrukturnog sistema!";
+            HomeViewModel.DELIMITER_CONST.Add(str);
+            int old_id = graphsViewModel.ChosenId;
+            graphsViewModel.ChosenId = 1;
+            graphsViewModel.ChosenId = old_id;
         }
+
+        private void CloseWindow(Window MainWindow)
+        {
+            MainWindow.Close();
+        }
+
     }
 }
