@@ -89,22 +89,70 @@
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="1.5*"/>
+                            <ColumnDefinition Width="1.8*"/>
                         </Grid.ColumnDefinitions>
 
                         <Border  Grid.Row="0" Grid.ColumnSpan="2"  Margin="0,0,0,15" Background="White" CornerRadius="20" Grid.RowSpan="2">
                         </Border>
 
                         <Border  Grid.Row="2" Background="White" CornerRadius="20" Grid.RowSpan="2">
-                            <Grid TextBlock.FontSize="25" TextBlock.FontFamily="Roboto" TextBlock.TextAlignment="Center" Margin="15">
+                            <StackPanel TextBlock.FontSize="25" TextBlock.FontFamily="Roboto" TextBlock.TextAlignment="Center" Margin="15">
                                 <TextBlock Text="EDIT ENTITIES" FontWeight="Bold"/>
                                 <ComboBox FontSize="20" Margin="20" Height="40" ItemsSource="{Binding Addresses}" />
 
-                                
-                            </Grid>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Button x:Name="AddEntitieButton" Content="ADD" Height="70" Width="170" Grid.Column="0" />
+                                    <Button x:Name="DeleteEntitieButton" Content="DELETE" Height="70" Width="170" Grid.Column="1" />
+                                </Grid>
+                                <TextBlock Text="deleting an entity is an irreversible action" FontSize="12" Padding="8" FontStyle="Italic" />
+                            </StackPanel>
                         </Border>
 
                         <Border  Grid.Row="2" Grid.Column="1"  Margin="15,0,0,0" Background="White" CornerRadius="20" Grid.RowSpan="2">
+                            <StackPanel TextBlock.FontSize="25" TextBlock.FontFamily="Roboto" TextBlock.TextAlignment="Center" Margin="15">
+                                <TextBlock Text="FILTER ENTITIES" FontWeight="Bold"/>
+                                <Grid Margin="20,0,10,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="3*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <ComboBox FontSize="20" Margin="0,20,0,0" Height="40" ItemsSource="{Binding Addresses}" SelectedIndex="{Binding chosenClassesAddresses}" Grid.Column="0"/>
+
+                                    <TextBlock Text="ID:" Margin="20,25,20,0" HorizontalAlignment="Left" Grid.Column="1"/>
+                                    <TextBox x:Name="FilterByID" Margin="55,20,0,0" Grid.Column="1" FontSize="20" MaxLength="5" Text="{Binding ChosenID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+                                    <TextBlock Text="RELATION TO ID:" Margin="20,25,20,0" HorizontalAlignment="Left" Grid.Column="2"/>
+                                    
+                                    <Viewbox Margin="100,20,0,0" Height="30" Grid.Column="2">
+                                        <RadioButton Content="&lt;" IsChecked="{Binding LessIsChecked}" />
+                                    </Viewbox>
+                                    <Viewbox Margin="200,20,0,0" Height="30" Grid.Column="2">
+                                        <RadioButton Content=">" IsChecked="{Binding MoreIsChecked}" />
+                                    </Viewbox>
+                                    <Viewbox Margin="300,20,0,0" Height="30" Grid.Column="2">
+                                        <RadioButton Content="=" IsChecked="{Binding EqualsIsChecked}" />
+                                    </Viewbox>
+                                </Grid>
+
+                                <Button x:Name="SearchFilterButton" Content="SEARCH" Margin="0,20,0,0" Height="40" Width="500"/>
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="1.4*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Text="FILTER HISTORY:" Margin="130,25,0,0" Grid.Column="0"/>
+                                    <ComboBox FontSize="20" Margin="0,20,135,0" Height="40" ItemsSource="{Binding Addresses}" SelectedIndex="{Binding chosenClassesAddresses}" Grid.Column="1"/>
+                                </Grid>
+                            </StackPanel>
                         </Border>
                     </Grid>
                 </Border>
