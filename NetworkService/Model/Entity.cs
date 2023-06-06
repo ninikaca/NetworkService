@@ -9,7 +9,7 @@ using System.Windows;
 
 namespace NetworkService.Model
 {
-    class Entity : ValidationBase
+    public class Entity : ValidationBase
     {
         //polja klase
         private int id;

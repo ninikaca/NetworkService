@@ -9,6 +9,6 @@ namespace NetworkService.ViewModel
 {
     public class HomeViewModel : BindableBase
     {
-        
+        public static List<string> DELIMITER_CONST = new List<string>();
     }
 }

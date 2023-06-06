@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using NetworkService.Helpers;
 
 namespace NetworkService.Model
 {
-    class Measurement
+    public class Measurement : BindableBase
     {
         //polja klase
         private int measured;
@@ -23,6 +19,7 @@ namespace NetworkService.Model
             {
                 return measured;
             }
+
             set
             {
                 if (measured != value)
@@ -33,12 +30,12 @@ namespace NetworkService.Model
 
                 if (measured < 45 || measured > 75)
                 {
-                    vanOpsega = true;
+                    outOfRange = true;
                     OnPropertyChanged("OutOfRange");
                 }
                 else
                 {
-                    vanOpsega = false;
+                    outOfRange = false;
                     OnPropertyChanged("OutOfRange");
                 }
             }
