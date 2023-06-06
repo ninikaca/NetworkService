@@ -58,7 +58,7 @@ namespace NetworkService.ViewModel
 
         private void createListener()
         {
-            var tcp = new TcpListener(IPAddress.Any, 25567);
+            var tcp = new TcpListener(IPAddress.Any, 27567);
             tcp.Start();
 
             var listeningThread = new Thread(() =>

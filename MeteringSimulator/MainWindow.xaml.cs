@@ -45,7 +45,7 @@ namespace MeteringSimulator
             {
                 //Pita koliko aplikacija ima objekata
                 //Request
-                Int32 port = 25567;
+                Int32 port = 27567;
                 TcpClient client = new TcpClient("localhost", port);
                 Byte[] data = System.Text.Encoding.ASCII.GetBytes("Need object count");
                 NetworkStream stream = client.GetStream();
