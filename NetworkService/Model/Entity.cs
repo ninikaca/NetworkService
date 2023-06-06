@@ -11,7 +11,7 @@ namespace NetworkService.Model
 {
     class Entity : ValidationBase
     {
-        //konstruktori klase
+        //polja klase
         private int id;
         private int name;
         private int address;
@@ -103,10 +103,10 @@ namespace NetworkService.Model
                     // ukoliko je vec na canvasu ispisuje se poruka
                     if (PositionOnCanvas != -1)
                     {
-                        DataChangeMessage message = new DataChangeMessage()
+                        MessageChange message = new MessageChange()
                         {
-                            Visibility_Uspesno = Visibility.Hidden,
-                            Visibility_Greska = Visibility.Visible,
+                            Visibility_Success = Visibility.Hidden,
+                            Visibility_Error = Visibility.Visible,
                             Mess = "🛑 Entity | " + Id + " | " + Name + " | " + IpAddress + " | has critical value of " + Occupied + "%!"
                         };
 
@@ -121,10 +121,10 @@ namespace NetworkService.Model
                     // ukoliko je vec na canvasu ispisuje se poruka
                     if (PositionOnCanvas != -1)
                     {
-                        DataChangeMessage message = new DataChangeMessage()
+                        MessageChange message = new MessageChange()
                         {
-                            Visibility_Uspesno = Visibility.Visible,
-                            Visibility_Greska = Visibility.Hidden,
+                            Visibility_Success = Visibility.Visible,
+                            Visibility_Error = Visibility.Hidden,
                             Mess = "✔ Entity | " + Id + " | " + Name + " | " + IpAddress + " | has critical value of " + Occupied + "%!"
                         };
 

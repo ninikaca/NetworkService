@@ -62,6 +62,7 @@
     <Compile Include="Helpers\MyICommand.cs" />
     <Compile Include="Helpers\ValidationBase.cs" />
     <Compile Include="Model\Entity.cs" />
+    <Compile Include="Model\Measurement.cs" />
     <Compile Include="Model\MessageChange.cs" />
     <Compile Include="ViewModel\EntitiesViewModel.cs" />
     <Compile Include="ViewModel\GraphsViewModel.cs" />

@@ -94,7 +94,7 @@
 
                         <!-- Table -->
                         <Border Grid.Row="0" Grid.ColumnSpan="2"  Margin="0,0,0,15" Background="White" CornerRadius="20" Grid.RowSpan="2">
-                            <DataGrid CanUserSortColumns="False" CanUserResizeColumns="False" SelectionMode="Single" SelectionUnit="FullRow"  AutoGenerateColumns="False" IsReadOnly="True" Margin="10" TextBlock.FontSize="25" TextBlock.FontFamily="Roboto" TextBlock.TextAlignment="Center" ItemsSource="{Binding listOfEntities}" SelectedItem="{Binding chosenEntity}">
+                            <DataGrid CanUserSortColumns="False" CanUserResizeColumns="False" SelectionMode="Single" SelectionUnit="FullRow"  AutoGenerateColumns="False" IsReadOnly="True" Margin="10" TextBlock.FontSize="25" TextBlock.FontFamily="Roboto" TextBlock.TextAlignment="Center" ItemsSource="{Binding ListOfEntities}" SelectedItem="{Binding chosenEntity}">
                                 
                                 <DataGrid.Resources>
                                     <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="LightGray" />
@@ -108,10 +108,10 @@
                                         <DataGridTextColumn.CellStyle>
                                             <Style TargetType="DataGridCell">
                                                 <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding Boja}" Value="false">
+                                                    <DataTrigger Binding="{Binding Color}" Value="false">
                                                         <Setter Property="Foreground" Value="DarkGreen" />
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{Binding Boja}" Value="true">
+                                                    <DataTrigger Binding="{Binding Color}" Value="true">
                                                         <Setter Property="Foreground" Value="DarkRed" />
                                                     </DataTrigger>
                                                 </Style.Triggers>
