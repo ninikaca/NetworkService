@@ -13,7 +13,7 @@ namespace NetworkService.ViewModel
     {
         private enum CLASSES { ONE, TWO, THREE };
         private int chosenClassesAddresses;
-        private static readonly ObservableCollection<string> Addresses = new ObservableCollection<string> { "Address scope 1", "Address scope 2", "Address scope 3"};
+        private static readonly ObservableCollection<string> Addresses = new ObservableCollection<string> { "Address scope 1", "Address scope 2", "Address scope 3", "Address scope 4", "Address scope 5" };
 
         private int ChosenID;
 
