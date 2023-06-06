@@ -102,9 +102,9 @@
                                 </DataGrid.Resources>
                                 <DataGrid.Columns>
                                     <DataGridTextColumn FontWeight="Bold" FontSize="25" FontFamily="Roboto" Width="150" Header="ID" Binding="{Binding Id}"/>
-                                    <DataGridTextColumn FontWeight="Bold" FontSize="25" FontFamily="Roboto" Width="350" Header="NAME" Binding="{Binding Naziv}" />
-                                    <DataGridTextColumn FontWeight="Bold" FontSize="25" FontFamily="Roboto" Width="250" Header="IP ADDRESS" Binding="{Binding IP}" />
-                                    <DataGridTextColumn FontWeight="Bold" FontSize="25" FontFamily="Roboto" Width="500" Header="OCCUPIED (%)" Binding="{Binding Zauzece}" >
+                                    <DataGridTextColumn FontWeight="Bold" FontSize="25" FontFamily="Roboto" Width="350" Header="NAME" Binding="{Binding Name}" />
+                                    <DataGridTextColumn FontWeight="Bold" FontSize="25" FontFamily="Roboto" Width="250" Header="IP ADDRESS" Binding="{Binding IpAddress}" />
+                                    <DataGridTextColumn FontWeight="Bold" FontSize="25" FontFamily="Roboto" Width="500" Header="OCCUPIED (%)" Binding="{Binding Occupied}" >
                                         <DataGridTextColumn.CellStyle>
                                             <Style TargetType="DataGridCell">
                                                 <Style.Triggers>
