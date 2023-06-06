@@ -1,4 +1,5 @@
 ﻿using NetworkService.Helpers;
+using NetworkService.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -19,5 +20,9 @@ namespace NetworkService.ViewModel
         private bool LessIsChecked;
         private bool MoreIsChecked;
         private bool EqualsIsChecked;
+
+        private Entity chosenEntity;
+
+        private static ObservableCollection<Entity> listOfEntities { get; set; }
     }
 }

@@ -9,7 +9,6 @@ namespace NetworkService.ViewModel
 {
     public class GraphsViewModel : BindableBase
     {
-        // dalje moras sama
-        // daniel
+        
     }
 }

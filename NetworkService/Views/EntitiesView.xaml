@@ -92,7 +92,34 @@
                             <ColumnDefinition Width="1.8*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Border  Grid.Row="0" Grid.ColumnSpan="2"  Margin="0,0,0,15" Background="White" CornerRadius="20" Grid.RowSpan="2">
+                        <!-- Table -->
+                        <Border Grid.Row="0" Grid.ColumnSpan="2"  Margin="0,0,0,15" Background="White" CornerRadius="20" Grid.RowSpan="2">
+                            <DataGrid CanUserSortColumns="False" CanUserResizeColumns="False" SelectionMode="Single" SelectionUnit="FullRow"  AutoGenerateColumns="False" IsReadOnly="True" Margin="10" TextBlock.FontSize="25" TextBlock.FontFamily="Roboto" TextBlock.TextAlignment="Center" ItemsSource="{Binding listOfEntities}" SelectedItem="{Binding chosenEntity}">
+                                
+                                <DataGrid.Resources>
+                                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="LightGray" />
+                                    <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Gray" />
+                                </DataGrid.Resources>
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn FontWeight="Bold" FontSize="25" FontFamily="Roboto" Width="150" Header="ID" Binding="{Binding Id}"/>
+                                    <DataGridTextColumn FontWeight="Bold" FontSize="25" FontFamily="Roboto" Width="350" Header="NAME" Binding="{Binding Naziv}" />
+                                    <DataGridTextColumn FontWeight="Bold" FontSize="25" FontFamily="Roboto" Width="250" Header="IP ADDRESS" Binding="{Binding IP}" />
+                                    <DataGridTextColumn FontWeight="Bold" FontSize="25" FontFamily="Roboto" Width="500" Header="OCCUPIED (%)" Binding="{Binding Zauzece}" >
+                                        <DataGridTextColumn.CellStyle>
+                                            <Style TargetType="DataGridCell">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Boja}" Value="false">
+                                                        <Setter Property="Foreground" Value="DarkGreen" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Boja}" Value="true">
+                                                        <Setter Property="Foreground" Value="DarkRed" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </DataGridTextColumn.CellStyle>
+                                    </DataGridTextColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
                         </Border>
 
                         <Border  Grid.Row="2" Background="White" CornerRadius="20" Grid.RowSpan="2">

@@ -9,7 +9,6 @@ namespace NetworkService.ViewModel
 {
     public class HomeViewModel : BindableBase
     {
-        // dalje moras sama
-        // daniel
+        
     }
 }
