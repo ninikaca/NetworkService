@@ -60,10 +60,11 @@
     </ApplicationDefinition>
     <Compile Include="Assets\File.cs" />
     <Compile Include="Helpers\BindableBase.cs" />
-    <Compile Include="Helpers\Forwarder.cs" />
+    <Compile Include="Helpers\Converter.cs" />
     <Compile Include="Helpers\MyICommand.cs" />
     <Compile Include="Helpers\ValidationBase.cs" />
     <Compile Include="Model\Entity.cs" />
+    <Compile Include="Model\Forwarder.cs" />
     <Compile Include="Model\Measurement.cs" />
     <Compile Include="Model\MessageChange.cs" />
     <Compile Include="ViewModel\EntitiesViewModel.cs" />

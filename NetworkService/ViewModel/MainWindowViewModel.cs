@@ -215,7 +215,7 @@ namespace NetworkService.ViewModel
             Entity.Add(newEnt);
 
             //da zaobidjemo beskonacni poziv
-            Messenger.Default.Send(new PassForwardDummy() { Entity = newEnt });
+            Messenger.Default.Send(new Helpers.Converter() { Entity = newEnt });
         }
 
         private void RemoveFromList(int index)

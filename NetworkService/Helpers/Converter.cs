@@ -5,7 +5,7 @@ using System.Windows.Data;
 
 namespace NetworkService.Helpers
 {
-    public class Forwarder : IMultiValueConverter
+    public class Converter : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
