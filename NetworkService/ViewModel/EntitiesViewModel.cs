@@ -12,7 +12,7 @@ namespace NetworkService.ViewModel
     public class EntitiesViewModel : BindableBase
     {
         //filtriranje
-        public MyICommand CommandFiltet { get; set; }
+        public MyICommand CommandFilter { get; set; }
 
         //dodavanje
         public MyICommand CommandAdd { get; set; }
@@ -58,7 +58,7 @@ namespace NetworkService.ViewModel
             listOfEntities = MainWindowViewModel.Entities;
             HistoryOfFilter = new ObservableCollection<Filter>();
 
-            CommandFiltet = new MyICommand(CheckFilter);
+            CommandFilter = new MyICommand(CheckFilter);
             CommandAdd = new MyICommand(CheckAdd);
             CommandDelete = new MyICommand(CheckDelete);
 

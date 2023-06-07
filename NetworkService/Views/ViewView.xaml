@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:NetworkService.Views"
              mc:Ignorable="d" 
              Height="800" 
-             Width="1300"
+             Width="1500"
              Background="Transparent">
     <Grid>
         <Border CornerRadius="20" Background="WhiteSmoke">
@@ -89,18 +89,44 @@
 
                         <!-- Available entities tree -->
                         <Border Grid.Column="0" Margin="0,0,0,15" Background="White" CornerRadius="20" Grid.RowSpan="2">
-                            <StackPanel TextBlock.FontSize="25" TextBlock.FontFamily="Roboto" TextBlock.TextAlignment="Center" Margin="20">
+                            <Grid TextBlock.FontSize="25" TextBlock.FontFamily="Roboto" TextBlock.TextAlignment="Center" Margin="20">
                                 <TextBlock Text="EDIT ENTITIES" FontWeight="Bold"/>
-                                <TextBlock Text="Here you can find all the available entities." FontSize="15" FontStyle="Italic" />
-                            </StackPanel>
+                                <TextBlock Text="Here you can find all the available entities." Padding="25" FontSize="15" FontStyle="Italic" />
+                                
+                                <!-- Tree view -->
+                                <TreeView x:Name="treeView" Background="Transparent" BorderThickness="0" BorderBrush="Transparent" Margin="5,50,5,5">
+                                    <TreeView.Resources>
+                                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Aqua" />
+                                    </TreeView.Resources>
+                                </TreeView>
+                                
+                            </Grid>
                         </Border>
 
                         <!-- Grid view -->
                         <Border Grid.Column="1" Margin="15,0,0,15" Background="White" CornerRadius="20" Grid.RowSpan="2">
-                            <StackPanel TextBlock.FontSize="25" TextBlock.FontFamily="Roboto" TextBlock.TextAlignment="Center" Margin="20">
-                                <TextBlock Text="GRID" FontWeight="Bold"/>
-                                <TextBlock Text="Arrange the entities onto the grid." FontSize="15" FontStyle="Italic" />
-                            </StackPanel>
+                            <Grid TextBlock.FontSize="25" TextBlock.FontFamily="Roboto" TextBlock.TextAlignment="Center" Margin="20">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="0.38*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                
+                                <TextBlock Text="GRID" FontWeight="Bold" Grid.ColumnSpan="4" Grid.Row="0" />
+                                <TextBlock Text="Arrange the entities onto the grid." FontSize="15" Padding="25" FontStyle="Italic" Grid.ColumnSpan="4" Grid.Row="0" />
+
+                                <DockPanel Grid.Column="0" Grid.Row="1" Margin="5">
+                                    
+                                </DockPanel>
+                            </Grid>
                         </Border>
                     </Grid>
                 </Border>

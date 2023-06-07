@@ -12,7 +12,7 @@
         Name="MainWindowRef"
         AllowsTransparency="True"
         Height="800" 
-        Width="1300"
+        Width="1500"
         ResizeMode="NoResize"
         Background="Transparent">
     <Window.DataContext>
@@ -63,7 +63,7 @@
                         </Grid.ColumnDefinitions>
 
                         <!-- To home page -->
-                        <Button  Grid.Column="1" Background="Transparent" BorderBrush="Transparent">
+                        <Button  Grid.Column="1" Background="Transparent" BorderBrush="Transparent" >
                             <StackPanel>
                                 <Image Source="Assets/home.png" Stretch="Uniform" Width="50" Margin="10"/>
                                 <TextBlock Text="HOME"/>

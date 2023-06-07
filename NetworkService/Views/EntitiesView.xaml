@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:NetworkService.Views"
              mc:Ignorable="d" 
              Height="800" 
-             Width="1300"
+             Width="1500"
              Background="Transparent">
     <Grid>
         <Border CornerRadius="20" Background="WhiteSmoke">
@@ -133,16 +133,19 @@
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
 
-                                    <Button x:Name="AddEntitieButton" Content="ADD" Height="70" Width="170" Grid.Column="0" />
-                                    <Button x:Name="DeleteEntitieButton" Content="DELETE" Height="70" Width="170" Grid.Column="1" />
+                                    <Button x:Name="AddEntitieButton" Content="ADD" Height="70" Width="200" Grid.Column="0" Style="{StaticResource AddButtonStyle}" />
+                                    <Button x:Name="DeleteEntitieButton" Content="DELETE" Height="70" Width="200" Grid.Column="1" Style="{StaticResource DeleteButtonStyle}" />
                                 </Grid>
                                 <TextBlock Text="deleting an entity is an irreversible action" FontSize="12" Padding="8" FontStyle="Italic" />
                             </StackPanel>
                         </Border>
 
+                        <!-- Filter -->
                         <Border  Grid.Row="2" Grid.Column="1"  Margin="15,0,0,0" Background="White" CornerRadius="20" Grid.RowSpan="2">
                             <StackPanel TextBlock.FontSize="25" TextBlock.FontFamily="Roboto" TextBlock.TextAlignment="Center" Margin="15">
                                 <TextBlock Text="FILTER ENTITIES" FontWeight="Bold"/>
+                                
+                                <!-- Prvi red -->
                                 <Grid Margin="20,0,10,0">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="2*"/>
@@ -153,7 +156,7 @@
                                     <ComboBox FontSize="20" Margin="0,20,0,0" Height="40" ItemsSource="{Binding Addresses}" SelectedIndex="{Binding chosenClassesAddresses}" Grid.Column="0"/>
 
                                     <TextBlock Text="ID:" Margin="20,25,20,0" HorizontalAlignment="Left" Grid.Column="1"/>
-                                    <TextBox x:Name="FilterByID" Margin="55,20,0,0" Grid.Column="1" FontSize="20" MaxLength="5" Text="{Binding ChosenID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <TextBox x:Name="FilterByID" Margin="55,20,0,0" Grid.Column="1" FontSize="20" MaxLength="5" Text="{Binding CurrentID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
                                     <TextBlock Text="RELATION TO ID:" Margin="20,25,20,0" HorizontalAlignment="Left" Grid.Column="2"/>
                                     
@@ -168,8 +171,10 @@
                                     </Viewbox>
                                 </Grid>
 
-                                <Button x:Name="SearchFilterButton" Content="SEARCH" Margin="0,20,0,0" Height="40" Width="500"/>
+                                <!-- Drugi red / samo search -->
+                                <Button x:Name="SearchFilterButton" Content="SEARCH" Margin="0,20,0,0" Height="40" Width="500" Command="{Binding CommandFilter}" Style="{StaticResource SearchButtonStyle}"/>
 
+                                <!-- Treci red / istorija filtera -->
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
