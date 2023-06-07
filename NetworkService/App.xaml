@@ -7,7 +7,22 @@
         <Style TargetType="{x:Type Window}">
             <Setter Property="FontFamily" Value="Roboto" />
         </Style>
-        
+
+        <!-- Ogranicenje boja -->
+        <SolidColorBrush x:Key="UIPrimaryColor" Color="White" />
+        <SolidColorBrush x:Key="UISecondaryColor" Color="LightBlue" />
+        <SolidColorBrush x:Key="UITertiaryColor" Color="#08313A" />
+        <SolidColorBrush x:Key="UIAccentColor" Color="#3F5576" />
+        <SolidColorBrush x:Key="UIQuatriraryColor" Color="#D3EAE7" />
+        <SolidColorBrush x:Key="UIPetaryColor" Color="#08313A" />
+        <SolidColorBrush x:Key="UIWhiteColor" Color="#ffffff" />
+        <SolidColorBrush x:Key="UIBlueColor" Color="#A3EBB1" />
+        <SolidColorBrush x:Key="UIRedColor" Color="#F1C0B9" />
+        <SolidColorBrush x:Key="UIFreeColor" Color="#A3EBB1" />
+
+        <Color x:Key="GradientColorOne" R="176" G="141" B="0" A="100" />
+        <Color x:Key="GradientColorTwo" R="92" G="68" B="0" A="100" />
+
         <!-- COMBO BOX -->
         <Style TargetType="{x:Type ComboBox}">
             <Setter Property="Background" Value="White"/>

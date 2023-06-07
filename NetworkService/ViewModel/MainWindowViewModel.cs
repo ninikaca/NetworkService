@@ -70,7 +70,7 @@ namespace NetworkService.ViewModel
                 File.Delete("log.txt");
             }
 
-            viewViewModel.UpdateMeasurement();
+            graphsViewModel.UpdateMeasurement();
         }
 
         public string Mess

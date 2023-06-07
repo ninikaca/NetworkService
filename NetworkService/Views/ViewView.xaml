@@ -3,7 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:local="clr-namespace:NetworkService.Views"
+             xmlns:model="clr-namespace:NetworkService.Model"
              mc:Ignorable="d" 
              Height="800" 
              Width="1500"
@@ -94,10 +96,54 @@
                                 <TextBlock Text="Here you can find all the available entities." Padding="25" FontSize="15" FontStyle="Italic" />
                                 
                                 <!-- Tree view -->
-                                <TreeView x:Name="treeView" Background="Transparent" BorderThickness="0" BorderBrush="Transparent" Margin="5,50,5,5">
+                                <TreeView x:Name="treeView" Background="Transparent" BorderThickness="0" BorderBrush="Transparent" Margin="5,50,5,5" ItemsSource="{Binding treeViewBindingList}">
                                     <TreeView.Resources>
-                                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Aqua" />
+                                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="{StaticResource GradientColorOne}" />
+                                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black" />
+                                        <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="Transparent" />
+                                        <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}" Color="Black" />
                                     </TreeView.Resources>
+                                    <HierarchicalDataTemplate DataType="{x:Type model:BindingEntity}" ItemsSource="{Binding listOfEntities}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Addresses}" FontSize="25" FontWeight="SemiBold" Foreground="White"/>
+                                        </StackPanel>
+                                    </HierarchicalDataTemplate>
+                                    <TreeView.Resources>
+                                        <DataTemplate DataType="{x:Type model:Entity}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock FontSize="16" FontWeight="SemiBold" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <Run Text="{Binding Name}" />
+                                    <Run Text="      " />
+                                            </TextBlock>
+                                            <Image Source="{Binding Picture}" Width="40" />
+                                            <TextBlock Margin="10, 0, 0, 0" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="TextBlock">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Color}" Value="false">
+                                                                <Setter Property="Foreground" Value="DarkGreen" />
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding Color}" Value="true">
+                                                                <Setter Property="Foreground" Value="DarkRed" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                    <Run Text="{Binding Occupied}" />
+                                    <Run Text="%  " />
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                    </TreeView.Resources>
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="MouseLeftButtonUp">
+                                            <i:InvokeCommandAction Command="{Binding CommandPreviewMouseUp}"/>
+                                        </i:EventTrigger>
+                                        <i:EventTrigger EventName="SelectedItemChanged">
+                                            <i:InvokeCommandAction Command="{Binding ChosenTreeView}" CommandParameter="{Binding ElementName=treeView}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                    
                                 </TreeView>
                                 
                             </Grid>
@@ -105,7 +151,7 @@
 
                         <!-- Grid view -->
                         <Border Grid.Column="1" Margin="15,0,0,15" Background="White" CornerRadius="20" Grid.RowSpan="2">
-                            <Grid TextBlock.FontSize="25" TextBlock.FontFamily="Roboto" TextBlock.TextAlignment="Center" Margin="20">
+                            <Grid x:Name="rightGridOnCanvas" TextBlock.FontSize="25" TextBlock.FontFamily="Roboto" TextBlock.TextAlignment="Center" Margin="20">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="*"/>

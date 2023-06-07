@@ -231,7 +231,7 @@
                         <Border Grid.Column="1" Margin="15,0,0,15" Background="White" CornerRadius="20" Grid.Row="0">
                             <StackPanel TextBlock.FontSize="25" TextBlock.FontFamily="Roboto" TextBlock.TextAlignment="Center" Margin="20">
                                 <TextBlock Text="STATISTICS" FontWeight="Bold"/>
-                                <ComboBox FontSize="20" Margin="20" Height="40" ItemsSource="{Binding Addresses}" Style="{StaticResource ComboBoxStyle}"/>
+                                <ComboBox FontSize="20" Margin="20" Height="40" ItemsSource="{Binding Addresses}" />
                             </StackPanel>
                         </Border>
 

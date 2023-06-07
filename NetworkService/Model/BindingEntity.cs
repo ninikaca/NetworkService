@@ -4,7 +4,7 @@ namespace NetworkService.Model
 {
     public class BindingEntity
     {
-        public string addresses { get; set; }
+        public string Addresses { get; set; }
         public BindingList<Entity> listOfEntities { get; set; }
 
         public BindingEntity()

@@ -15,7 +15,7 @@ namespace NetworkService.Model
         //prazan konstruktor
         public Filter()
         {
-           
+           //prazan
         }
 
         public int ChosenId
@@ -115,7 +115,7 @@ namespace NetworkService.Model
 
         public override string ToString()
         {
-            string format = EntitiesViewModel.Addresses[IndexInAddresses] + " | ";
+            string format = EntitiesViewModel.Address[IndexInAddresses] + " | ";
 
             if (LessIsChecked) format += "ID < " + ChosenId;
             if (MoreIsChecked) format += "ID > " + ChosenId;
