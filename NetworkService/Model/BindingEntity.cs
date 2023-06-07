@@ -2,7 +2,7 @@
 
 namespace NetworkService.Model
 {
-    class BindingEntity
+    public class BindingEntity
     {
         public string addresses { get; set; }
         public BindingList<Entity> listOfEntities { get; set; }
