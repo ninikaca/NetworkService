@@ -63,7 +63,9 @@
     <Compile Include="Helpers\Converter.cs" />
     <Compile Include="Helpers\MyICommand.cs" />
     <Compile Include="Helpers\ValidationBase.cs" />
+    <Compile Include="Model\Deleter.cs" />
     <Compile Include="Model\Entity.cs" />
+    <Compile Include="Model\Filter.cs" />
     <Compile Include="Model\Forwarder.cs" />
     <Compile Include="Model\Measurement.cs" />
     <Compile Include="Model\MessageChange.cs" />

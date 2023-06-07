@@ -17,7 +17,8 @@ namespace NetworkService.ViewModel
     {
         // za menjannje menija
         public MyICommand<string> NavCommand { get; private set; }
-        
+        public MyICommand<Window> CloseWindowCommand { get; private set; }
+
         //view model instance
         public HomeViewModel homeViewModel;
         public EntitiesViewModel entitiesViewModel;
