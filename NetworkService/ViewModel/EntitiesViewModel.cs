@@ -41,7 +41,7 @@ namespace NetworkService.ViewModel
         private Filter chosenFilter = new Filter();
 
         private static ObservableCollection<Entity> listOfEntities { get; set; }
-        public static ObservableCollection<Filter> historyOfFilter { get; set; }
+        public static ObservableCollection<Filter> HistoryOfFilter { get; set; }
 
         public EntitiesViewModel()
         {
@@ -53,9 +53,7 @@ namespace NetworkService.ViewModel
 
             chosenId_Add = 0;
             chosenIdFromFilter_History = 0;
-            DeleteIsEnabled = new MyICommand(CheckDelete);
-
-            ChosenEntity = false;
+            ChosenEntity = null;
 
             listOfEntities = MainWindowViewModel.Entities;
             HistoryOfFilter = new ObservableCollection<Filter>();
@@ -438,6 +436,106 @@ namespace NetworkService.ViewModel
             // informativna poruka
             Succesfull = Visibility.Visible;
             Mess = "⛔ Entity -> |" + max_id + " | " + name + " | " + address + "| was added!";
+        }
+
+        //filtriranje
+        public void CheckFilter()
+        {
+            // Sacuvaj u istoriju filtera
+            Filter previous = new Filter
+            {
+                IndexInAddresses = chosenClassesAddresses,
+                LessIsChecked = LessIsChecked,
+                MoreIsChecked = MoreIsChecked,
+                EqualsIsChecked = EqualsIsChecked,
+                ChosenId = CurrentID
+            };
+
+            // Ako filter vec postoji u listi filtera - ne dodaje ste
+            bool wasUsedBefore = false;
+            foreach (Filter tmp in HistoryOfFilter)
+            {
+                if (tmp.Equals(previous))
+                {
+                    wasUsedBefore = true;
+                    break;
+                }
+            }
+
+            if (!wasUsedBefore)
+            {
+                HistoryOfFilter.Add(previous);
+            }
+
+            // Primena filtera
+            listOfEntities = FilterEntities();
+
+            // poruka korisniku
+            Information = Visibility.Visible;
+            Mess = "Filter by |" + previous + "| is done generating, elements are listed!";
+        }
+
+        ObservableCollection<Entity> FilterEntities()
+        {
+            ObservableCollection<Entity> filteredElntities = new ObservableCollection<Entity>();
+            ObservableCollection<Entity> allEntities = MainWindowViewModel.Entities;
+
+            // Nije odabran nijedan entitet
+            ChosenEntity = null;
+
+            if (allEntities != null && allEntities.Count > 0)
+            {
+                foreach (Entity ent in allEntities)
+                {
+                    int klasa = GetADdressScope(ent.IpAddress);
+
+                    // Pripada odabranoj klasi
+                    if (chosenClassesAddresses == klasa)
+                    {
+                        // Proveri vece, manje, jednako
+                        if (SortByEqual(ent))
+                        {
+                            filteredElntities.Add(ent);
+                        }
+                    }
+                }
+            }
+
+            return filteredElntities;
+        }
+
+        int GetADdressScope(string address)
+        {
+            int inScope = 0;
+            int scope = int.Parse(address.Split('.')[0]);
+
+            if (scope >= 1 && scope <= 127) inScope = 0;
+            if (scope >= 128 && scope <= 191) inScope = 1;
+            if (scope >= 192 && scope <= 223) inScope = 2;
+            if (scope >= 224 && scope <= 239) inScope = 3;
+            if (scope >= 240 && scope <= 255) inScope = 4;
+
+            return inScope;
+        }
+
+        bool SortByEqual(Entity current)
+        {
+            if (LessIsChecked && (current.Id < CurrentID))
+            {
+                return true;
+            }
+            else if (MoreIsChecked && (current.Id > CurrentID))
+            {
+                return true;
+            }
+            else if (EqualsIsChecked && (current.Id == CurrentID))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public Filter ChosenFilter
