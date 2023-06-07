@@ -44,11 +44,12 @@ namespace NetworkService.ViewModel
 
             Entities = new ObservableCollection<Entity>();
 
-            // sada ovde je potrebno i kreirate objekte views
+            // kreirate objekte views
             homeViewModel = new HomeViewModel();
             entitiesViewModel = new EntitiesViewModel();
             graphsViewModel = new GraphsViewModel();
             viewViewModel = new ViewViewModel();
+            CurrentViewModel = homeViewModel;
 
             Messenger.Default.Register<Entity>(this, AddToList);
             Messenger.Default.Register<int>(this, RemoveFromList);
@@ -57,10 +58,10 @@ namespace NetworkService.ViewModel
             //testiranje kroz 15 primera
             for (int i = 0; i < 3; i++)
             {
-                entitiesViewModel.OnAdd();
+                entitiesViewModel.CheckAdd();
             }
 
-            entitiesViewModel.SelectedIndexOfAddedEntity = 0;
+            entitiesViewModel.ChosenId_Add = 0;
             viewViewModel = new ViewViewModel();
 
             // brisanje starog log-a ako postoji
@@ -70,12 +71,6 @@ namespace NetworkService.ViewModel
             }
 
             viewViewModel.UpdateMeasurement();
-
-            entitiesViewModel.Information = Visibility.Visible;
-            entitiesViewModel.Mess = "The program is ready. You can start using the application to work with network entities";
-
-            graphsViewModel.Information = Visibility.Visible;
-            graphsViewModel.Mess = "The program is ready. You can start using the application to work with network entities";
         }
 
         public string Mess
