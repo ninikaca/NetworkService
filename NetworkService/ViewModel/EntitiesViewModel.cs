@@ -30,7 +30,7 @@ namespace NetworkService.ViewModel
         private bool moreIsChecked;
         private bool equalsIsChecked;
 
-        private int chosenIdFromFilter_Add;
+        private int chosenId_Add;
         private int chosenIdFromFilter_History;
         private bool deleteIsEnabled;
 
@@ -51,7 +51,7 @@ namespace NetworkService.ViewModel
             moreIsChecked = false;
             equalsIsChecked = false;
 
-            chosenIdFromFilter_Add = 0;
+            chosenId_Add = 0;
             chosenIdFromFilter_History = 0;
             DeleteIsEnabled = new MyICommand(CheckDelete);
 
@@ -109,6 +109,23 @@ namespace NetworkService.ViewModel
             }
         }
 
+        public ObservableCollection<Entity> ListOfEntities
+        {
+            get
+            {
+                return listOfEntities;
+            }
+
+            set
+            {
+                if (listOfEntities != null)
+                {
+                    listOfEntities = value;
+                    OnPropertyChanged("ListOfEntities");
+                }
+            }
+        }
+
         public int ChosenClassesAddresses
         {
             get
@@ -126,19 +143,19 @@ namespace NetworkService.ViewModel
             }
         }
 
-        public int ChosenIdFromFilter_Add
+        public int ChosenId_Add
         {
             get
             {
-                return chosenIdFromFilter_Add;
+                return chosenId_Add;
             }
 
             set
             {
-                if (chosenIdFromFilter_Add != value)
+                if (chosenId_Add != value)
                 {
-                    chosenIdFromFilter_Add = value;
-                    OnPropertyChanged("ChosenIdFromFilter_Add");
+                    chosenId_Add = value;
+                    OnPropertyChanged("ChosenId_Add");
                 }
             }
         }
@@ -368,7 +385,60 @@ namespace NetworkService.ViewModel
         }
 
         //dodavanje entiteta
+        public void CheckAdd()
+        {
+            ChosenEntity = null;
+            ListOfEntities = MainWindowViewModel.Entities;
 
+            //Na osnovu odabrane adresne klase kreirati random entitet
+
+            // novi id je trenutni najveci id + 1
+            int max_id = ListOfEntities.Count != 0 ? ListOfEntities.Max(x => x.Id) + 1 : 1;
+
+            int chosenAddressScope = chosenId_Add;
+            const int ip_min = 0, ip_max = 255;
+            int scope1, scope2, scope3, scope4;
+            string address, classes;
+
+            // generisanje na osnovu odabrane adresne klase
+            switch (chosenAddressScope)
+            {
+                case 0: scope1 = new Random().Next(1, 127); classes = "ONE"; break;
+                case 1: scope1 = new Random().Next(128, 191); classes = "TWO"; break;
+                case 2: scope1 = new Random().Next(192, 223); classes = "THREE"; break;
+                case 3: scope1 = new Random().Next(224, 239); classes = "FOUR"; break;
+                case 4: scope1 = new Random().Next(240, 255); classes = "FIVE"; break;
+                default: scope1 = 0; classes = "ONE"; break;
+            }
+
+            scope2 = new Random().Next(ip_min, ip_max);
+            Thread.Sleep(50);
+
+            scope3 = new Random().Next(ip_min, ip_max);
+            Thread.Sleep(50);
+
+            scope4 = new Random().Next(ip_min, ip_max);
+
+            address = scope1 + "." + scope2 + "." + scope3 + "." + scope4;
+            string name = "Entity " + (max_id < 10 ? ("0" + max_id).ToString() : max_id.ToString());
+
+            Messenger.Default.Send(
+                new Entity()
+                {
+                    Id = max_id,
+                    Name = name,
+                    IpAddress = address,
+                    Picture = "/Assets/uredjaj.png",
+                    Occupied = new Random().Next(0, 100),
+                    Scope = classes,
+                    PositionOnCanvas = -1,
+                    //povezan sa entitetom = -1
+                });
+
+            // informativna poruka
+            Succesfull = Visibility.Visible;
+            Mess = "⛔ Entity -> |" + max_id + " | " + name + " | " + address + "| was added!";
+        }
 
         public Filter ChosenFilter
         {
