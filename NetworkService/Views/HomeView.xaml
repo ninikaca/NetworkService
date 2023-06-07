@@ -7,8 +7,27 @@
              mc:Ignorable="d" 
              Height="800" 
              Width="1500"
-             Background="White">
+             Background="Transparent">
     <Grid>
-            
+        <Border CornerRadius="20" Background="WhiteSmoke">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0*"/>
+                    <RowDefinition Height="75*"/>
+                </Grid.RowDefinitions>
+
+                <Grid.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="Effect">
+                            <Setter.Value>
+                                <DropShadowEffect Color="#e0dede" Direction="0" ShadowDepth="2" BlurRadius="20"/>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Grid.Resources>
+
+                
+            </Grid>
+        </Border>
     </Grid>
 </UserControl>

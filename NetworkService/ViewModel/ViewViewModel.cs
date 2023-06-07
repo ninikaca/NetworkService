@@ -214,7 +214,7 @@ namespace NetworkService.ViewModel
 
         private void ChangedChosenTreeView(TreeView tv)
         {
-            var window = ViewViewModel.UserControl;
+            var window = ViewView.UserControl;
 
             if (!dragging && tv != null && tv.SelectedItem != null && tv.SelectedItem.GetType() == typeof(Entity))
             {

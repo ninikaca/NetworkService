@@ -44,16 +44,13 @@ namespace NetworkService.ViewModel
 
             Entities = new ObservableCollection<Entity>();
 
-            // kreirate objekte views
-            homeViewModel = new HomeViewModel();
-            entitiesViewModel = new EntitiesViewModel();
-            graphsViewModel = new GraphsViewModel();
-            viewViewModel = new ViewViewModel();
-            CurrentViewModel = homeViewModel;
-
             Messenger.Default.Register<Entity>(this, AddToList);
             Messenger.Default.Register<int>(this, RemoveFromList);
             Messenger.Default.Register<ObservableCollection<Entity>>(this, GetList);
+
+            // kreirate objekte views
+            homeViewModel = new HomeViewModel();
+            entitiesViewModel = new EntitiesViewModel();
 
             //testiranje kroz 15 primera
             for (int i = 0; i < 3; i++)
@@ -61,6 +58,9 @@ namespace NetworkService.ViewModel
                 entitiesViewModel.CheckAdd();
             }
 
+            graphsViewModel = new GraphsViewModel();
+            viewViewModel = new ViewViewModel();
+            CurrentViewModel = homeViewModel;
             entitiesViewModel.ChosenId_Add = 0;
             viewViewModel = new ViewViewModel();
 
@@ -93,7 +93,7 @@ namespace NetworkService.ViewModel
         //tcp konekcija
         private void createListener()
         {
-            var tcp = new TcpListener(IPAddress.Any, 27567);
+            var tcp = new TcpListener(IPAddress.Any, new Random().Next(20000,30000));
             tcp.Start();
 
             var listeningThread = new Thread(() =>

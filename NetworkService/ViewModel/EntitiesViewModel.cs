@@ -421,7 +421,7 @@ namespace NetworkService.ViewModel
             string name = "Entity " + (max_id < 10 ? ("0" + max_id).ToString() : max_id.ToString());
 
             Messenger.Default.Send(
-                new Entity()
+                new Entity
                 {
                     Id = max_id,
                     Name = name,

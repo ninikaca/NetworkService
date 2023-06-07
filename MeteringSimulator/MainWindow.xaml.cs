@@ -95,7 +95,7 @@ namespace MeteringSimulator
             {
                 //Slanje nove vrednosti objekta
                 //Request
-                Int32 port = 25565;
+                Int32 port = 27565;
                 TcpClient client = new TcpClient("localhost", port);
                 int rInt = r.Next(0, numObjects); //Brojimo od nule, maxValue nije ukljucen u range
                 objectNum = rInt;

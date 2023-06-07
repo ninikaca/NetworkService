@@ -14,7 +14,7 @@
         <Border CornerRadius="20" Background="WhiteSmoke">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="25*"/>
+                    <RowDefinition Height="0"/>
                     <RowDefinition Height="75*"/>
                 </Grid.RowDefinitions>
 
@@ -96,56 +96,53 @@
                                 <TextBlock Text="Here you can find all the available entities." Padding="25" FontSize="15" FontStyle="Italic" />
                                 
                                 <!-- Tree view -->
-                                <TreeView x:Name="treeView" Background="Transparent" BorderThickness="0" BorderBrush="Transparent" Margin="5,50,5,5" ItemsSource="{Binding treeViewBindingList}">
+                                <TreeView x:Name="treeView" ItemsSource="{Binding treeViewBindingList}" Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" Background="Transparent" BorderThickness="0" BorderBrush="Transparent" Grid.ColumnSpan="4" Margin="5, 50, 5, 5">
                                     <TreeView.Resources>
                                         <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="{StaticResource GradientColorOne}" />
                                         <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black" />
                                         <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="Transparent" />
                                         <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}" Color="Black" />
-                                    </TreeView.Resources>
-                                    <HierarchicalDataTemplate DataType="{x:Type model:BindingEntity}" ItemsSource="{Binding listOfEntities}">
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="{Binding Addresses}" FontSize="25" FontWeight="SemiBold" Foreground="White"/>
-                                        </StackPanel>
-                                    </HierarchicalDataTemplate>
-                                    <TreeView.Resources>
+
+                                        <HierarchicalDataTemplate DataType="{x:Type model:BindingEntity}" ItemsSource="{Binding listOfEntities}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding Addresses}" FontSize="20" FontWeight="SemiBold" Foreground="White"/>
+                                            </StackPanel>
+                                        </HierarchicalDataTemplate>
                                         <DataTemplate DataType="{x:Type model:Entity}">
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock FontSize="16" FontWeight="SemiBold" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock FontSize="16" FontWeight="SemiBold" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center">
                                     <Run Text="{Binding Name}" />
                                     <Run Text="      " />
-                                            </TextBlock>
-                                            <Image Source="{Binding Picture}" Width="40" />
-                                            <TextBlock Margin="10, 0, 0, 0" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                                <TextBlock.Style>
-                                                    <Style TargetType="TextBlock">
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding Color}" Value="false">
-                                                                <Setter Property="Foreground" Value="DarkGreen" />
-                                                            </DataTrigger>
-                                                            <DataTrigger Binding="{Binding Color}" Value="true">
-                                                                <Setter Property="Foreground" Value="DarkRed" />
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </TextBlock.Style>
+                                                </TextBlock>
+                                                <Image Source="{Binding Picture}" Width="40" />
+                                                <TextBlock Margin="10, 0, 0, 0" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock">
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding Color}" Value="false">
+                                                                    <Setter Property="Foreground" Value="Green" />
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding Color}" Value="true">
+                                                                    <Setter Property="Foreground" Value="Red" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
                                     <Run Text="{Binding Occupied}" />
                                     <Run Text="%  " />
-                                            </TextBlock>
-                                        </StackPanel>
-                                    </DataTemplate>
+                                                </TextBlock>
+                                            </StackPanel>
+                                        </DataTemplate>
                                     </TreeView.Resources>
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="MouseLeftButtonUp">
-                                            <i:InvokeCommandAction Command="{Binding CommandPreviewMouseUp}"/>
+                                            <i:InvokeCommandAction Command="{Binding ClickLeftMouse}"/>
                                         </i:EventTrigger>
                                         <i:EventTrigger EventName="SelectedItemChanged">
                                             <i:InvokeCommandAction Command="{Binding ChosenTreeView}" CommandParameter="{Binding ElementName=treeView}"/>
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
-                                    
                                 </TreeView>
-                                
                             </Grid>
                         </Border>
 
