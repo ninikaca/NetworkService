@@ -83,9 +83,13 @@
                 <Border  Grid.Row="1" Margin="15,20,15,25" Background="Transparent" CornerRadius="20">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="2.5*"/>
+                            <ColumnDefinition Width="2.3*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="2.3*"/>
+                        </Grid.RowDefinitions>
 
                         <!-- Graph -->
                         <Border Grid.Column="0" Margin="0,0,0,15" Background="White" CornerRadius="20" Grid.RowSpan="2">
@@ -95,10 +99,48 @@
                         </Border>
 
                         <!--  Statistics -->
-                        <Border Grid.Column="1" Margin="15,0,0,15" Background="White" CornerRadius="20" Grid.RowSpan="2">
+                        <Border Grid.Column="1" Margin="15,0,0,15" Background="White" CornerRadius="20" Grid.Row="0">
                             <StackPanel TextBlock.FontSize="25" TextBlock.FontFamily="Roboto" TextBlock.TextAlignment="Center" Margin="20">
                                 <TextBlock Text="STATISTICS" FontWeight="Bold"/>
+                                <ComboBox FontSize="20" Margin="20" Height="40" ItemsSource="{Binding Addresses}" />
                             </StackPanel>
+                        </Border>
+
+                        <!-- Selected entity details -->
+                        <Border Grid.Column="1" Margin="15,0,0,15" Background="White" CornerRadius="20" Grid.Row="1">
+                            <Grid TextBlock.FontSize="25" TextBlock.FontFamily="Roboto" TextBlock.TextAlignment="Center" Margin="20">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Text="SELECTED ENTITY DETAILS" FontWeight="Bold"  Grid.Row="0" Grid.ColumnSpan="2"/>
+                                
+                                <!-- Details ID -->
+                                <Label Content="ID:" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0"/>
+                                <Label Content="{Binding ChosenEntity.Id}" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="20,0,0,0" Grid.Row="1" Grid.Column="1"/>
+
+                                <!-- Details NAME -->
+                                <Label Content="NAME:" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0"/>
+                                <Label Content="{Binding ChosenEntity.Name}" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="20,0,0,0" Grid.Row="2" Grid.Column="1"/>
+                                
+                                <!-- Details IP -->
+                                <Label Content="IP ADDRESS:" HorizontalAlignment="Right" VerticalAlignment="Center" Padding="0,0,20,0" Grid.Row="3" Grid.Column="0"/>
+                                <Label Content="{Binding ChosenEntity.IpAddress}" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="20,0,0,0" Grid.Row="3" Grid.Column="1"/>
+                                
+                                <!-- Details OCCUPIED -->
+                                <Label Content="OCCUPIED:" HorizontalAlignment="Right" VerticalAlignment="Center" Padding="0,0,20,0" Grid.Row="4" Grid.Column="0"/>
+                                <Label Content="{Binding ChosenEntity.Occupied}" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="20,0,0,0" Grid.Row="4" Grid.Column="1"/>
+                                
+                            </Grid>
                         </Border>
                     </Grid>
                 </Border>
