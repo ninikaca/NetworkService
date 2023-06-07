@@ -13,8 +13,8 @@ namespace NetworkService.Model
     {
         //polja klase
         private int id;
-        private int name;
-        private int address;
+        private string name;
+        private string address;
         private int occupied;
         private int position_on_canvas;
 
@@ -46,7 +46,7 @@ namespace NetworkService.Model
             }
         }
 
-        public int Name
+        public string Name
         {
             get
             {
@@ -63,7 +63,7 @@ namespace NetworkService.Model
             }
         }
 
-        public int IpAddress
+        public string IpAddress
         {
             get
             {

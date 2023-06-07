@@ -25,7 +25,7 @@ namespace NetworkService.ViewModel
         private int chosenClassesAddresses;
         private static readonly ObservableCollection<string> addresses = new ObservableCollection<string> { "Address scope 1", "Address scope 2", "Address scope 3", "Address scope 4", "Address scope 5" };
 
-        private int chosenID;
+        private int currentID;
         private bool lessIsChecked;
         private bool moreIsChecked;
         private bool equalsIsChecked;
@@ -45,7 +45,7 @@ namespace NetworkService.ViewModel
 
         public EntitiesViewModel()
         {
-            chosenID = 0;
+            currentID = 0;
             chosenClassesAddresses = 0;
             lessIsChecked = true;
             moreIsChecked = false;
@@ -75,6 +75,22 @@ namespace NetworkService.ViewModel
             }
         }
 
+        public int CurrentID
+        {
+            get
+            {
+                return currentID;
+            }
+
+            set
+            {
+                if (currentID != value)
+                {
+                    currentID = Math.Abs(value);
+                    OnPropertyChanged("CurrentID");
+                }
+            }
+        }
         public Entity ChosenEntity
         {
             get
@@ -331,6 +347,58 @@ namespace NetworkService.ViewModel
                     }
 
                     OnPropertyChanged("Information");
+                }
+            }
+        }
+
+        //brisanje entiteta
+        public void CheckDelete()
+        {
+            int id = ChosenEntity.Id;
+            string name = ChosenEntity.Name;
+            string address = ChosenEntity.IpAddress;
+
+            Messenger.Default.Send(listOfEntities.IndexOf(ChosenEntity));
+            ChosenEntity = null;
+            Messenger.Default.Send(listOfEntities);
+
+            // poruka korisniku
+            Error = Visibility.Visible;
+            Mess = "⛔ Entity -> |" + id + " | " + name + " | " + address + "| was deleted!";
+        }
+
+        //dodavanje entiteta
+
+
+        public Filter ChosenFilter
+        {
+            get
+            {
+                return chosenFilter;
+            }
+
+            set
+            {
+                if (chosenFilter != value)
+                {
+                    chosenFilter = value;
+
+                    // primeniti filter na polja
+                    ChosenClassesAddresses = chosenFilter.IndexInAddresses;
+                    LessIsChecked = chosenFilter.LessIsChecked;
+                    MoreIsChecked = chosenFilter.MoreIsChecked;
+                    EqualsIsChecked = chosenFilter.EqualsIsChecked;
+                    CurrentID = chosenFilter.ChosenId;
+
+                    OnPropertyChanged("ChosenFilter");
+                    OnPropertyChanged("ChosenClassesAddresses");
+                    OnPropertyChanged("MoreIsChecked");
+                    OnPropertyChanged("LessIsChecked");
+                    OnPropertyChanged("EqualsIsChecked");
+                    OnPropertyChanged("ChosenId");
+
+                    // primeni filter
+                    CheckFilter();
                 }
             }
         }
