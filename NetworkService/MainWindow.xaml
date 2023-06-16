@@ -12,7 +12,7 @@
         Name="MainWindowRef"
         AllowsTransparency="True"
         Height="1000" 
-        Width="1550"
+        Width="1545"
         ResizeMode="NoResize"
         Background="Transparent"
         WindowStyle="None">
@@ -64,7 +64,7 @@
                         </Grid.ColumnDefinitions>
 
                         <!-- To home page -->
-                        <Button  Grid.Column="1" Background="Transparent" BorderBrush="Transparent" Command="{Binding NavCommand}" CommandParameter="home" >
+                        <Button  Grid.Column="1" Background="Transparent" BorderBrush="Transparent" Command="{Binding NavCommand}" CommandParameter="home" Template="{StaticResource NoMouseOverButtonTemplate}" >
                             <StackPanel>
                                 <Image Source="Assets/home.png" Stretch="Uniform" Width="50" Margin="10"/>
                                 <TextBlock Text="HOME"/>
@@ -72,7 +72,7 @@
                         </Button>
 
                         <!-- To entities page -->
-                        <Button  Grid.Column="2" Background="Transparent" BorderBrush="Transparent" Command="{Binding NavCommand}" CommandParameter="entities">
+                        <Button  Grid.Column="2" Background="Transparent" BorderBrush="Transparent" Command="{Binding NavCommand}" CommandParameter="entities" Template="{StaticResource NoMouseOverButtonTemplate}">
                             <StackPanel>
                                 <Image Source="Assets/table.png" Stretch="Uniform" Width="50" Margin="10"/>
                                 <TextBlock Text="ENTITIES"/>
@@ -80,7 +80,7 @@
                         </Button>
 
                         <!-- To view page -->
-                        <Button  Grid.Column="3" Background="Transparent" BorderBrush="Transparent" Command="{Binding NavCommand}" CommandParameter="view">
+                        <Button  Grid.Column="3" Background="Transparent" BorderBrush="Transparent" Command="{Binding NavCommand}" CommandParameter="view" Template="{StaticResource NoMouseOverButtonTemplate}">
                             <StackPanel>
                                 <Image Source="Assets/view.png" Stretch="Uniform" Width="50" Margin="10"/>
                                 <TextBlock Text="VIEW"/>
@@ -88,7 +88,7 @@
                         </Button>
 
                         <!-- To graphs page -->
-                        <Button  Grid.Column="4" Background="Transparent" BorderBrush="Transparent" Command="{Binding NavCommand}" CommandParameter="graphs">
+                        <Button  Grid.Column="4" Background="Transparent" BorderBrush="Transparent" Command="{Binding NavCommand}" CommandParameter="graphs" Template="{StaticResource NoMouseOverButtonTemplate}">
                             <StackPanel>
                                 <Image Source="Assets/graphs.png" Stretch="Uniform" Width="50" Margin="10"/>
                                 <TextBlock Text="GRAPHS"/>
@@ -96,7 +96,7 @@
                         </Button>
 
                         <!-- Exit button -->
-                        <Button  Grid.Column="5" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Right" Margin="10">
+                        <Button  Grid.Column="5" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Right" Margin="10" Template="{StaticResource NoMouseOverButtonTemplate}" Command="{Binding CloseWindowCommand}"  CommandParameter="{Binding ElementName=MainWindowRef}">
                             <StackPanel>
                                 <Image Source="Assets/exit.png" Stretch="Uniform" Width="70" Margin="10"/>
                             </StackPanel>

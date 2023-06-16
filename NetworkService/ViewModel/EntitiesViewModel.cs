@@ -22,7 +22,7 @@ namespace NetworkService.ViewModel
 
         //sva potrebna polja
         private enum CLASSES { ONE, TWO, THREE, FOUR, FIVE };
-        private int chosenClassesAddresses;
+        private int chosenClassesAddresses = 0;
         private static readonly ObservableCollection<string> addresses = new ObservableCollection<string> { "Address scope 1", "Address scope 2", "Address scope 3", "Address scope 4", "Address scope 5" };
 
         private int currentID;
@@ -30,8 +30,8 @@ namespace NetworkService.ViewModel
         private bool moreIsChecked;
         private bool equalsIsChecked;
 
-        private int chosenId_Add;
-        private int chosenIdFromFilter_History;
+        private int chosenId_Add = 0;
+        private int chosenIdFromFilter_History = 0;
         private bool deleteIsEnabled;
 
         private Visibility succesfull, error, information;
@@ -421,7 +421,7 @@ namespace NetworkService.ViewModel
             string name = "Entity " + (max_id < 10 ? ("0" + max_id).ToString() : max_id.ToString());
 
             Messenger.Default.Send(
-                new Entity
+                new Entity()
                 {
                     Id = max_id,
                     Name = name,
@@ -468,7 +468,7 @@ namespace NetworkService.ViewModel
             }
 
             // Primena filtera
-            listOfEntities = FilterEntities();
+            ListOfEntities = FilterEntities();
 
             // poruka korisniku
             Information = Visibility.Visible;

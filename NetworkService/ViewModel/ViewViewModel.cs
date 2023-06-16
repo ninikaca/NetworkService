@@ -11,6 +11,7 @@ using NetworkService.Helpers;
 using System.Windows.Controls;
 using System.Collections.Generic;
 using System.Windows.Media.Imaging;
+using System.Diagnostics;
 
 namespace NetworkService.ViewModel
 {
@@ -36,8 +37,10 @@ namespace NetworkService.ViewModel
         private string mess;
 
         //binding elementi
-        public static BindingList<BindingEntity> canvasBindingList { get; set; }
-        public static BindingList<BindingEntity> treeViewBindingList { get; set; }
+        public static BindingList<BindingEntity> CanvasBindingList { get; set; }
+        public static BindingList<BindingEntity> TreeViewBindingList { get; set; }
+
+
 
         //drag & drop na samom canvasu medjusobno
         public MyICommand<Canvas> CommandPreviewMouseUp { get; private set; }
@@ -47,6 +50,16 @@ namespace NetworkService.ViewModel
 
         public ViewViewModel()
         {
+            // za prijem novih entiteta
+            Messenger.Default.Register<Forwarder>(this, AddToTreeView);
+
+            // za uklanjanje entiteta ako se ukloni iz liste svih
+            Messenger.Default.Register<Deleter>(this, RemoveFromTreeView);
+
+            Messenger.Default.Register<MessageChange>(this, Notify);
+
+            Messenger.Default.Register<int>(this, RemoveIfOnCanvas);
+
             CommandDragOver = new MyICommand<Canvas>(DoDragOver);
             CommandDrop = new MyICommand<Canvas>(DoDrop);
 
@@ -65,6 +78,14 @@ namespace NetworkService.ViewModel
 
             InitList();
 
+            foreach(Entity e in MainWindowViewModel.Entities)
+            {
+                TreeViewBindingList[0].listOfEntities.Add(e);
+            }
+        }
+
+        public ViewViewModel(Grid rightGridOnCanvas)
+        {
             // za prijem novih entiteta
             Messenger.Default.Register<Forwarder>(this, AddToTreeView);
 
@@ -75,7 +96,73 @@ namespace NetworkService.ViewModel
 
             Messenger.Default.Register<int>(this, RemoveIfOnCanvas);
 
+            right = rightGridOnCanvas;
+
+            CommandAddAllToGrid = new MyICommand<Grid>(RandomAddAllToGrid);
+
+            // komande
+            CommandDragOver = new MyICommand<Canvas>(DoDragOver);
+            CommandDrop = new MyICommand<Canvas>(DoDrop);
+            ClickLeftMouse = new MyICommand(ClickLeftMouseUp);
+            ChosenTreeView = new MyICommand<TreeView>(ChangedChosenTreeView);
+            CommandRemoveFromGrid = new MyICommand<Canvas>(DoRemoveFromGrid);
+
+            // komande za d&d
+            CommandPreviewMouseUp = new MyICommand<Canvas>(PreviewMouseUp);
+            CommandPreviewMouseDown = new MyICommand<Canvas>(PreviewMouseDown);
+            CommandPreviewMouseMove = new MyICommand<Canvas>(PreviewMouseMove);
+
+            Succesfull = Error = Visibility.Hidden;
+            Information = Visibility.Visible;
+            Mess = "Wellcome! The aplication is ready.";
+
+            // restauracija canvasa
+            // indeksiranje
+            // dock paneli krecu od indeksa 1
+            // indeks 1 u dock panelu je canvas
+            List<Canvas> kanvasi = new List<Canvas>();
+
+            for (int i = 2; i < 18; i++)
+            {
+                DockPanel panel = (DockPanel)(rightGridOnCanvas.Children[i]);
+                Canvas canvas = (Canvas)(panel.Children[1]);
+                kanvasi.Add(canvas);
+            }
+
+            foreach (BindingEntity be in CanvasBindingList.ToList())
+            {
+                foreach (Entity e in be.listOfEntities.ToList())
+                {
+                    if (e.PositionOnCanvas != -1)
+                    {
+                        draggedItem = MainWindowViewModel.Entities.FirstOrDefault(p => p.Id == e.Id);
+                        Canvas kanvas = kanvasi[e.PositionOnCanvas - 1];
+
+                        TextBlock write = ((TextBlock)(kanvas).Children[0]);
+
+                        if (draggedItem != null)
+                        {
+                            if (kanvas.Resources["taken"] == null)
+                            {
+                                BitmapImage img = new BitmapImage();
+                                img.BeginInit();
+                                string putanja = Directory.GetCurrentDirectory() + "/Assets/uredjaj.png";
+                                img.UriSource = new Uri(putanja, UriKind.Absolute);
+                                img.EndInit();
+                                kanvas.Background = new ImageBrush(img);
+                                write.Text = draggedItem.Name;
+                                write.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#000000"));
+                                draggedItem.PositionOnCanvas = GetCanvasId(kanvas.Name);
+                                kanvas.Resources.Add("taken", true);
+                            }
+                            draggedItem = null;
+                            dragging = false;
+                        }
+                    }
+                }
+            }
         }
+
 
         public void DoDragOver(Canvas kanvas)
         {
@@ -132,28 +219,28 @@ namespace NetworkService.ViewModel
         {
             if (draggedItem.Scope.Equals("ONE"))
             {
-                treeViewBindingList[0].listOfEntities.RemoveAt(selected);
-                canvasBindingList[0].listOfEntities.Add(draggedItem);
+                TreeViewBindingList[0].listOfEntities.RemoveAt(selected);
+                CanvasBindingList[0].listOfEntities.Add(draggedItem);
             }
             else if (draggedItem.Scope.Equals("TWO"))
             {
-                treeViewBindingList[1].listOfEntities.RemoveAt(selected);
-                canvasBindingList[1].listOfEntities.Add(draggedItem);
+                TreeViewBindingList[1].listOfEntities.RemoveAt(selected);
+                CanvasBindingList[1].listOfEntities.Add(draggedItem);
             }
             else if (draggedItem.Scope.Equals("THREE"))
             {
-                treeViewBindingList[2].listOfEntities.RemoveAt(selected);
-                canvasBindingList[2].listOfEntities.Add(draggedItem);
+                TreeViewBindingList[2].listOfEntities.RemoveAt(selected);
+                CanvasBindingList[2].listOfEntities.Add(draggedItem);
             }
             else if (draggedItem.Scope.Equals("FOUR"))
             {
-                treeViewBindingList[3].listOfEntities.RemoveAt(selected);
-                canvasBindingList[3].listOfEntities.Add(draggedItem);
+                TreeViewBindingList[3].listOfEntities.RemoveAt(selected);
+                CanvasBindingList[3].listOfEntities.Add(draggedItem);
             }
             else if (draggedItem.Scope.Equals("FIVE"))
             {
-                treeViewBindingList[4].listOfEntities.RemoveAt(selected);
-                canvasBindingList[4].listOfEntities.Add(draggedItem);
+                TreeViewBindingList[4].listOfEntities.RemoveAt(selected);
+                CanvasBindingList[4].listOfEntities.Add(draggedItem);
             }
         }
 
@@ -180,7 +267,7 @@ namespace NetworkService.ViewModel
             int coundAddressClass = 0;
 
             // prolazimo kroz sve adresne klase
-            foreach (BindingEntity be in canvasBindingList)
+            foreach (BindingEntity be in CanvasBindingList)
             {
                 // i trazimo u listi entiteta odredjene klase onaj entitet koji je na canvasu
                 foreach (Entity e in be.listOfEntities)
@@ -209,7 +296,7 @@ namespace NetworkService.ViewModel
             addressClassOfItem.listOfEntities.Remove(item);
 
             // dodajemo u tree view u odredjenu klasu adresa kojoj entitet i pripada
-            treeViewBindingList[coundAddressClass].listOfEntities.Add(item);
+            TreeViewBindingList[coundAddressClass].listOfEntities.Add(item);
         }
 
         private void ChangedChosenTreeView(TreeView tv)
@@ -230,23 +317,23 @@ namespace NetworkService.ViewModel
             int index = 0;
             if (draggedItem.Scope.Equals("ONE"))
             {
-                index = treeViewBindingList[0].listOfEntities.IndexOf(draggedItem);
+                index = TreeViewBindingList[0].listOfEntities.IndexOf(draggedItem);
             }
             else if (draggedItem.Scope.Equals("TWO"))
             {
-                index = treeViewBindingList[1].listOfEntities.IndexOf(draggedItem);
+                index = TreeViewBindingList[1].listOfEntities.IndexOf(draggedItem);
             }
             else if (draggedItem.Scope.Equals("THREE"))
             {
-                index = treeViewBindingList[2].listOfEntities.IndexOf(draggedItem);
+                index = TreeViewBindingList[2].listOfEntities.IndexOf(draggedItem);
             }
             else if (draggedItem.Scope.Equals("FOUR"))
             {
-                index = treeViewBindingList[3].listOfEntities.IndexOf(draggedItem);
+                index = TreeViewBindingList[3].listOfEntities.IndexOf(draggedItem);
             }
             else if (draggedItem.Scope.Equals("FIVE"))
             {
-                index = treeViewBindingList[4].listOfEntities.IndexOf(draggedItem);
+                index = TreeViewBindingList[4].listOfEntities.IndexOf(draggedItem);
             }
 
             return index;
@@ -309,7 +396,7 @@ namespace NetworkService.ViewModel
             string entityName = ((TextBlock)canvas.Children[0]).Text;
             Entity ent = null;
 
-            foreach (BindingEntity be in canvasBindingList)
+            foreach (BindingEntity be in CanvasBindingList)
             {
                 foreach (Entity e in be.listOfEntities)
                 {
@@ -427,7 +514,7 @@ namespace NetworkService.ViewModel
         //inicijalizacija listi
         public void InitList()
         {
-            canvasBindingList = new BindingList<BindingEntity>()
+            CanvasBindingList = new BindingList<BindingEntity>()
             {
                 new BindingEntity() { Addresses = "Address scope 1" },
                 new BindingEntity() { Addresses = "Address scope 2" },
@@ -436,7 +523,7 @@ namespace NetworkService.ViewModel
                 new BindingEntity() { Addresses = "Address scope 5"}
             };
 
-            treeViewBindingList = new BindingList<BindingEntity>()
+            TreeViewBindingList = new BindingList<BindingEntity>()
             {
                 new BindingEntity() { Addresses = "Address scope 1" },
                 new BindingEntity() { Addresses = "Address scope 2" },
@@ -457,7 +544,8 @@ namespace NetworkService.ViewModel
             if (newEnt.Scope.Equals("FOUR")) classes = 3;
             if (newEnt.Scope.Equals("FIVE")) classes = 4;
 
-            treeViewBindingList[classes].listOfEntities.Add(newEnt);
+            if (TreeViewBindingList[classes].listOfEntities.FirstOrDefault(p => p.Id ==  newEnt.Id) == null)
+                TreeViewBindingList[classes].listOfEntities.Add(newEnt);
         }
         
         private void RemoveFromTreeView(Deleter dl)
@@ -472,16 +560,16 @@ namespace NetworkService.ViewModel
             if (toDelete.Scope.Equals("FIVE")) classes = 4;
 
             // ako se element nalazi na canvasu, ukloniti ga iz liste i sa canvasa
-            if (canvasBindingList[classes].listOfEntities.Contains(toDelete))
+            if (CanvasBindingList[classes].listOfEntities.Contains(toDelete))
             {
-                canvasBindingList[classes].listOfEntities.Remove(toDelete);
+                CanvasBindingList[classes].listOfEntities.Remove(toDelete);
 
             }
 
             // ako se nalazi u tree view - ukloniti ga
-            if (treeViewBindingList[classes].listOfEntities.Contains(toDelete))
+            if (TreeViewBindingList[classes].listOfEntities.Contains(toDelete))
             {
-                treeViewBindingList[classes].listOfEntities.Remove(toDelete);
+                TreeViewBindingList[classes].listOfEntities.Remove(toDelete);
             }
         }
 
@@ -502,7 +590,7 @@ namespace NetworkService.ViewModel
             // indeks 1 u dock panelu je canvas
             List<Canvas> kanvasi = new List<Canvas>();
 
-            for (int i = 1; i < 13; i++)
+            for (int i = 2; i < 18; i++)
             {
                 DockPanel panel = (DockPanel)(right.Children[i]);
                 Canvas canvas = (Canvas)(panel.Children[1]);
@@ -515,8 +603,11 @@ namespace NetworkService.ViewModel
 
         private void RandomAddAllToGrid(Grid rightGridOnCanvas)
         {
+            if (rightGridOnCanvas == null)
+                return; 
+
             // Rasporedi na preostala slobodna mesta
-            for (int i = 1; i <= 12; i++)
+            for (int i = 2; i < 18; i++)
             {
                 // uzmemo canvas
                 Canvas kanvas = ((Canvas)((DockPanel)(rightGridOnCanvas.Children[i])).Children[1]);
@@ -526,35 +617,35 @@ namespace NetworkService.ViewModel
                 if (entityName.Equals(""))
                 {
                     // prazan je canvas
-                    if (treeViewBindingList[0].listOfEntities.Count > 0)
+                    if (TreeViewBindingList[0].listOfEntities.Count > 0)
                     {
-                        draggedItem = treeViewBindingList[0].listOfEntities[0];
-                        treeViewBindingList[0].listOfEntities.RemoveAt(0);
-                        canvasBindingList[0].listOfEntities.Add(draggedItem);
+                        draggedItem = TreeViewBindingList[0].listOfEntities[0];
+                        TreeViewBindingList[0].listOfEntities.RemoveAt(0);
+                        CanvasBindingList[0].listOfEntities.Add(draggedItem);
                     }
-                    else if (treeViewBindingList[1].listOfEntities.Count > 0)
+                    else if (TreeViewBindingList[1].listOfEntities.Count > 0)
                     {
-                        draggedItem = treeViewBindingList[1].listOfEntities[0];
-                        treeViewBindingList[1].listOfEntities.RemoveAt(0);
-                        canvasBindingList[1].listOfEntities.Add(draggedItem);
+                        draggedItem = TreeViewBindingList[1].listOfEntities[0];
+                        TreeViewBindingList[1].listOfEntities.RemoveAt(0);
+                        CanvasBindingList[1].listOfEntities.Add(draggedItem);
                     }
-                    else if (treeViewBindingList[2].listOfEntities.Count > 0)
+                    else if (TreeViewBindingList[2].listOfEntities.Count > 0)
                     {
-                        draggedItem = treeViewBindingList[2].listOfEntities[0];
-                        treeViewBindingList[2].listOfEntities.RemoveAt(0);
-                        canvasBindingList[2].listOfEntities.Add(draggedItem);
+                        draggedItem = TreeViewBindingList[2].listOfEntities[0];
+                        TreeViewBindingList[2].listOfEntities.RemoveAt(0);
+                        CanvasBindingList[2].listOfEntities.Add(draggedItem);
                     }
-                    else if (treeViewBindingList[3].listOfEntities.Count > 0)
+                    else if (TreeViewBindingList[3].listOfEntities.Count > 0)
                     {
-                        draggedItem = treeViewBindingList[3].listOfEntities[0];
-                        treeViewBindingList[3].listOfEntities.RemoveAt(0);
-                        canvasBindingList[3].listOfEntities.Add(draggedItem);
+                        draggedItem = TreeViewBindingList[3].listOfEntities[0];
+                        TreeViewBindingList[3].listOfEntities.RemoveAt(0);
+                        CanvasBindingList[3].listOfEntities.Add(draggedItem);
                     }
-                    else if (treeViewBindingList[4].listOfEntities.Count > 0)
+                    else if (TreeViewBindingList[4].listOfEntities.Count > 0)
                     {
-                        draggedItem = treeViewBindingList[4].listOfEntities[0];
-                        treeViewBindingList[4].listOfEntities.RemoveAt(0);
-                        canvasBindingList[4].listOfEntities.Add(draggedItem);
+                        draggedItem = TreeViewBindingList[4].listOfEntities[0];
+                        TreeViewBindingList[4].listOfEntities.RemoveAt(0);
+                        CanvasBindingList[4].listOfEntities.Add(draggedItem);
                     }
 
                     if (draggedItem != null)
@@ -581,78 +672,5 @@ namespace NetworkService.ViewModel
             }
         }
 
-        // Kako bi se pamtilo stanje na canvasu - potrebno je koristiti konstruktor sa parametrima
-        public ViewViewModel(Grid rightGridOnCanvas)
-        {
-            right = rightGridOnCanvas;
-
-            CommandAddAllToGrid = new MyICommand<Grid>(RandomAddAllToGrid);
-
-            // komande
-            CommandDragOver = new MyICommand<Canvas>(DoDragOver);
-            CommandDrop = new MyICommand<Canvas>(DoDrop);
-            ClickLeftMouse = new MyICommand(ClickLeftMouseUp);
-            ChosenTreeView = new MyICommand<TreeView>(ChangedChosenTreeView);
-            CommandRemoveFromGrid = new MyICommand<Canvas>(DoRemoveFromGrid);
-
-            // komande za d&d
-            CommandPreviewMouseUp = new MyICommand<Canvas>(PreviewMouseUp);
-            CommandPreviewMouseDown = new MyICommand<Canvas>(PreviewMouseDown);
-            CommandPreviewMouseMove = new MyICommand<Canvas>(PreviewMouseMove);
-
-            Succesfull = Error = Visibility.Hidden;
-            Information = Visibility.Visible;
-            Mess = "Wellcome! The aplication is ready.";
-
-            // restauracija canvasa
-            // indeksiranje
-            // dock paneli krecu od indeksa 1
-            // indeks 1 u dock panelu je canvas
-            List<Canvas> kanvasi = new List<Canvas>();
-
-            for (int i = 1; i < 13; i++)
-            {
-                DockPanel panel = (DockPanel)(rightGridOnCanvas.Children[i]);
-                Canvas canvas = (Canvas)(panel.Children[1]);
-                kanvasi.Add(canvas);
-            }
-
-            foreach (BindingEntity be in canvasBindingList.ToList())
-            {
-                foreach (Entity e in be.listOfEntities.ToList())
-                {
-                    if (e.PositionOnCanvas != -1)
-                    {
-                        draggedItem = MainWindowViewModel.Entities.FirstOrDefault(p => p.Id == e.Id);
-                        Canvas kanvas = kanvasi[e.PositionOnCanvas - 1];
-
-                        TextBlock write = ((TextBlock)(kanvas).Children[0]);
-
-                        if (draggedItem != null)
-                        {
-                            if (kanvas.Resources["taken"] == null)
-                            {
-                                BitmapImage img = new BitmapImage();
-                                img.BeginInit();
-                                string putanja = Directory.GetCurrentDirectory() + "/Assets/uredjaj.png";
-                                img.UriSource = new Uri(putanja, UriKind.Absolute);
-                                img.EndInit();
-                                kanvas.Background = new ImageBrush(img);
-                                write.Text = draggedItem.Name;
-                                write.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#000000"));
-                                draggedItem.PositionOnCanvas = GetCanvasId(kanvas.Name);
-                                kanvas.Resources.Add("taken", true);
-                            }
-                            draggedItem = null;
-                            dragging = false;
-                        }
-                    }
-                }
-            }
-
-            Messenger.Default.Register<MessageChange>(this, Notify);
-            Messenger.Default.Register<int>(this, RemoveIfOnCanvas);
-
-        }
     }
 }

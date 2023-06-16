@@ -98,131 +98,112 @@
 
                                 <Canvas Margin="20,30,20,20" Background="White">
                                     <Line
-                                        X1="5" Y1="5"
-                                        X2="5" Y2="440"
+                                        X1="5" Y1="55"
+                                        X2="5" Y2="590"
                                         StrokeThickness="2"
                                         Stroke="Black"
                                         Canvas.Left="10">
                                     </Line>
 
                                     <Line
-                                         X1="-5" Y1="50"
-                                         X2="920" Y2="50"
+                                         X1="-5" Y1="200"
+                                         X2="920" Y2="200"
                                          Stroke="Black"
                                          StrokeThickness="2"
                                          Canvas.Left="20"
                                          Canvas.Top="390">
                                     </Line>
 
-                                    <Viewbox Height="{Binding Measurement1.Measured}" Width="150" Canvas.Left="50" Canvas.Top="140">
-                                        <Grid Width="10" Height="20">
-                                            <Rectangle>
-                                                <Rectangle.Style>
-                                                    <Style TargetType="Rectangle">
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding Measurement1.OutOfRange}" Value="false">
-                                                                <Setter Property="Fill" Value="Teal" />
-                                                            </DataTrigger>
-                                                            <DataTrigger Binding="{Binding Measurement1.OutOfRange}" Value="true">
-                                                                <Setter Property="Fill" Value="DarkRed" />
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </Rectangle.Style>
-                                                <Rectangle.RenderTransform>
-                                                    <TranslateTransform X="0" Y="0" />
-                                                </Rectangle.RenderTransform>
-                                            </Rectangle>
-                                        </Grid>
-                                    </Viewbox>
 
-                                    <Viewbox Height="{Binding Measurement2.Measured}" Width="150" Canvas.Left="220" Canvas.Top="140">
-                                        <Grid Width="10" Height="20">
-                                            <Rectangle>
-                                                <Rectangle.Style>
-                                                    <Style TargetType="Rectangle">
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding Measurement2.OutOfRange}" Value="false">
-                                                                <Setter Property="Fill" Value="Teal" />
-                                                            </DataTrigger>
-                                                            <DataTrigger Binding="{Binding Measurement2.OutOfRange}" Value="true">
-                                                                <Setter Property="Fill" Value="DarkRed" />
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </Rectangle.Style>
-                                                <Rectangle.RenderTransform>
-                                                    <TranslateTransform X="0" Y="0" />
-                                                </Rectangle.RenderTransform>
-                                            </Rectangle>
-                                        </Grid>
-                                    </Viewbox>
+                                    <Rectangle Canvas.Left="60" Canvas.Bottom="60" Width="50" Height="{Binding Measurement1.DoubleMax}">
+                                        <Rectangle.Style>
+                                            <Style TargetType="Rectangle">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Measurement1.OutOfRange}" Value="false">
+                                                        <Setter Property="Fill" Value="Teal" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Measurement1.OutOfRange}" Value="true">
+                                                        <Setter Property="Fill" Value="DarkRed" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Rectangle.Style>
+                                        <Rectangle.RenderTransform>
+                                            <TranslateTransform X="0" Y="0" />
+                                        </Rectangle.RenderTransform>
+                                    </Rectangle>
 
-                                    <Viewbox Height="{Binding Measurement3.Measured}" Width="150" Canvas.Left="390" Canvas.Top="140">
-                                        <Grid Width="10" Height="20">
-                                            <Rectangle>
-                                                <Rectangle.Style>
-                                                    <Style TargetType="Rectangle">
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding Measurement3.OutOfRange}" Value="false">
-                                                                <Setter Property="Fill" Value="Teal" />
-                                                            </DataTrigger>
-                                                            <DataTrigger Binding="{Binding Measurement3.OutOfRange}" Value="true">
-                                                                <Setter Property="Fill" Value="DarkRed" />
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </Rectangle.Style>
-                                                <Rectangle.RenderTransform>
-                                                    <TranslateTransform X="0" Y="0" />
-                                                </Rectangle.RenderTransform>
-                                            </Rectangle>
-                                        </Grid>
-                                    </Viewbox>
+                                    <Rectangle Canvas.Left="260" Canvas.Bottom="60" Width="50" Height="{Binding Measurement2.DoubleMax}">
+                                        <Rectangle.Style>
+                                            <Style TargetType="Rectangle">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Measurement2.OutOfRange}" Value="false">
+                                                        <Setter Property="Fill" Value="Teal" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Measurement2.OutOfRange}" Value="true">
+                                                        <Setter Property="Fill" Value="DarkRed" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Rectangle.Style>
+                                        <Rectangle.RenderTransform>
+                                            <TranslateTransform X="0" Y="0" />
+                                        </Rectangle.RenderTransform>
+                                    </Rectangle>
 
-                                    <Viewbox Height="{Binding Measurement4.Measured}" Width="150" Canvas.Left="560" Canvas.Top="140">
-                                        <Grid Width="10" Height="20">
-                                            <Rectangle>
-                                                <Rectangle.Style>
-                                                    <Style TargetType="Rectangle">
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding Measurement4.OutOfRange}" Value="false">
-                                                                <Setter Property="Fill" Value="Teal" />
-                                                            </DataTrigger>
-                                                            <DataTrigger Binding="{Binding Measurement4.OutOfRange}" Value="true">
-                                                                <Setter Property="Fill" Value="DarkRed" />
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </Rectangle.Style>
-                                                <Rectangle.RenderTransform>
-                                                    <TranslateTransform X="0" Y="0" />
-                                                </Rectangle.RenderTransform>
-                                            </Rectangle>
-                                        </Grid>
-                                    </Viewbox>
+                                    <Rectangle Canvas.Left="460" Canvas.Bottom="60" Width="50" Height="{Binding Measurement3.DoubleMax}">
+                                        <Rectangle.Style>
+                                            <Style TargetType="Rectangle">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Measurement3.OutOfRange}" Value="false">
+                                                        <Setter Property="Fill" Value="Teal" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Measurement3.OutOfRange}" Value="true">
+                                                        <Setter Property="Fill" Value="DarkRed" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Rectangle.Style>
+                                        <Rectangle.RenderTransform>
+                                            <TranslateTransform X="0" Y="0" />
+                                        </Rectangle.RenderTransform>
+                                    </Rectangle>
 
-                                    <Viewbox Height="{Binding Measurement5.Measured}" Width="150" Canvas.Left="730" Canvas.Top="140">
-                                        <Grid Width="10" Height="20">
-                                            <Rectangle>
-                                                <Rectangle.Style>
-                                                    <Style TargetType="Rectangle">
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding Measurement5.OutOfRange}" Value="false">
-                                                                <Setter Property="Fill" Value="Teal" />
-                                                            </DataTrigger>
-                                                            <DataTrigger Binding="{Binding Measurement5.OutOfRange}" Value="true">
-                                                                <Setter Property="Fill" Value="DarkRed" />
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </Rectangle.Style>
-                                                <Rectangle.RenderTransform>
-                                                    <TranslateTransform X="0" Y="0" />
-                                                </Rectangle.RenderTransform>
-                                            </Rectangle>
-                                        </Grid>
-                                    </Viewbox>
+                                    <Rectangle Canvas.Left="660" Canvas.Bottom="60" Width="50" Height="{Binding Measurement4.DoubleMax}">
+                                        <Rectangle.Style>
+                                            <Style TargetType="Rectangle">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Measurement4.OutOfRange}" Value="false">
+                                                        <Setter Property="Fill" Value="Teal" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Measurement4.OutOfRange}" Value="true">
+                                                        <Setter Property="Fill" Value="DarkRed" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Rectangle.Style>
+                                        <Rectangle.RenderTransform>
+                                            <TranslateTransform X="0" Y="0" />
+                                        </Rectangle.RenderTransform>
+                                    </Rectangle>
+
+                                    <Rectangle Canvas.Left="860" Canvas.Bottom="60" Width="50" Height="{Binding Measurement5.DoubleMax}">
+                                        <Rectangle.Style>
+                                            <Style TargetType="Rectangle">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Measurement5.OutOfRange}" Value="false">
+                                                        <Setter Property="Fill" Value="Teal" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Measurement5.OutOfRange}" Value="true">
+                                                        <Setter Property="Fill" Value="DarkRed" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Rectangle.Style>
+                                        <Rectangle.RenderTransform>
+                                            <TranslateTransform X="0" Y="0" />
+                                        </Rectangle.RenderTransform>
+                                    </Rectangle>
                                 </Canvas>
                             </Grid>
                         </Border>
@@ -231,7 +212,7 @@
                         <Border Grid.Column="1" Margin="15,0,0,15" Background="White" CornerRadius="20" Grid.Row="0">
                             <StackPanel TextBlock.FontSize="25" TextBlock.FontFamily="Roboto" TextBlock.TextAlignment="Center" Margin="20">
                                 <TextBlock Text="STATISTICS" FontWeight="Bold"/>
-                                <ComboBox FontSize="20" Margin="20" Height="40" ItemsSource="{Binding Addresses}" />
+                                <ComboBox FontSize="20" Margin="20" Height="40" ItemsSource="{Binding Entities}" SelectedItem="{Binding ChosenEntity}" />
                             </StackPanel>
                         </Border>
 
@@ -267,7 +248,7 @@
                                 
                                 <!-- Details OCCUPIED -->
                                 <Label Content="OCCUPIED:" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="4" Grid.Column="0"/>
-                                <TextBlock FontSize="25" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="50,0,0,0" Grid.Row="4" Grid.Column="1">
+                                <TextBlock FontSize="25" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="25,0,0,0" Grid.Row="4" Grid.Column="1">
                                     <Run Text="{Binding ChosenEntity.Occupied}" />
                                     <Run Text="%" />
                                 </TextBlock>

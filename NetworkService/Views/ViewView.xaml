@@ -92,11 +92,15 @@
                         <!-- Available entities tree -->
                         <Border Grid.Column="0" Margin="0,0,0,15" Background="White" CornerRadius="20" Grid.RowSpan="2">
                             <Grid TextBlock.FontSize="25" TextBlock.FontFamily="Roboto" TextBlock.TextAlignment="Center" Margin="20">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="0.1*"/>
+                                </Grid.RowDefinitions>
                                 <TextBlock Text="EDIT ENTITIES" FontWeight="Bold"/>
                                 <TextBlock Text="Here you can find all the available entities." Padding="25" FontSize="15" FontStyle="Italic" />
                                 
                                 <!-- Tree view -->
-                                <TreeView x:Name="treeView" ItemsSource="{Binding treeViewBindingList}" Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" Background="Transparent" BorderThickness="0" BorderBrush="Transparent" Grid.ColumnSpan="4" Margin="5, 50, 5, 5">
+                                <TreeView x:Name="treeView" ItemsSource="{Binding TreeViewBindingList}" Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" Background="Transparent" BorderThickness="0" BorderBrush="Transparent" Grid.ColumnSpan="4" Margin="5, 50, 5, 5">
                                     <TreeView.Resources>
                                         <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="{StaticResource GradientColorOne}" />
                                         <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black" />
@@ -105,12 +109,12 @@
 
                                         <HierarchicalDataTemplate DataType="{x:Type model:BindingEntity}" ItemsSource="{Binding listOfEntities}">
                                             <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="{Binding Addresses}" FontSize="20" FontWeight="SemiBold" Foreground="White"/>
+                                                <TextBlock Text="{Binding Addresses}" FontSize="20" FontWeight="SemiBold" Foreground="Black"/>
                                             </StackPanel>
                                         </HierarchicalDataTemplate>
                                         <DataTemplate DataType="{x:Type model:Entity}">
                                             <StackPanel Orientation="Horizontal">
-                                                <TextBlock FontSize="16" FontWeight="SemiBold" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                <TextBlock FontSize="16" FontWeight="SemiBold" Foreground="Black" VerticalAlignment="Center" HorizontalAlignment="Center">
                                     <Run Text="{Binding Name}" />
                                     <Run Text="      " />
                                                 </TextBlock>
@@ -143,6 +147,14 @@
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </TreeView>
+
+                                <Button Content="RANDOM SHUFFLE" Grid.Row="1" Margin="10" FontWeight="Bold" Command="{Binding CommandAddAllToGrid}" CommandParameter="{Binding ElementName=rightGridOnCanvas}" FontSize="22" Background="{StaticResource UIRedColor}">
+                                    <Button.Resources>
+                                        <Style TargetType="{x:Type Border}">
+                                            <Setter Property="CornerRadius" Value="4"/>
+                                        </Style>
+                                    </Button.Resources>
+                                </Button>
                             </Grid>
                         </Border>
 
@@ -167,8 +179,489 @@
                                 <TextBlock Text="Arrange the entities onto the grid." FontSize="15" Padding="25" FontStyle="Italic" Grid.ColumnSpan="4" Grid.Row="0" />
 
                                 <DockPanel Grid.Column="0" Grid.Row="1" Margin="5">
-                                    
+                                    <Button Content="OSLOBODI" FontWeight="Bold" Command="{Binding CommandRemoveFromGrid}" CommandParameter="{Binding ElementName=c1}" DockPanel.Dock="Bottom" FontSize="16" Background="{StaticResource UIRedColor}">
+                                        <Button.Resources>
+                                            <Style TargetType="{x:Type Border}">
+                                                <Setter Property="CornerRadius" Value="4"/>
+                                            </Style>
+                                        </Button.Resources>
+                                    </Button>
+                                    <Canvas Background="White" AllowDrop="True" x:Name="c1">
+                                        <TextBlock FontSize="14" FontWeight="Bold" Margin="5" Text=""/>
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="DragOver">
+                                                <i:InvokeCommandAction Command="{Binding CommandDragOver}" CommandParameter="{Binding ElementName=c1}"/>
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="PreviewMouseDown">
+                                                <i:InvokeCommandAction Command="{Binding CommandPreviewMouseDown}" CommandParameter="{Binding ElementName=c1}" />
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="PreviewMouseMove">
+                                                <i:InvokeCommandAction Command="{Binding CommandPreviewMouseMove}" CommandParameter="{Binding ElementName=c1}" />
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="PreviewMouseUp">
+                                                <i:InvokeCommandAction Command="{Binding CommandPreviewMouseUp}" CommandParameter="{Binding ElementName=c1}" />
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="Drop">
+                                                <i:InvokeCommandAction Command="{Binding CommandDrop}" CommandParameter="{Binding ElementName=c1}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </Canvas>
                                 </DockPanel>
+
+                                <DockPanel Grid.Column="1   " Grid.Row="1" Margin="5">
+                                    <Button Content="OSLOBODI" FontWeight="Bold" Command="{Binding CommandRemoveFromGrid}" CommandParameter="{Binding ElementName=c2}" DockPanel.Dock="Bottom" FontSize="16" Background="{StaticResource UIRedColor}">
+                                        <Button.Resources>
+                                            <Style TargetType="{x:Type Border}">
+                                                <Setter Property="CornerRadius" Value="4"/>
+                                            </Style>
+                                        </Button.Resources>
+                                    </Button>
+                                    <Canvas Background="White" AllowDrop="True" x:Name="c2">
+                                        <TextBlock FontSize="14" FontWeight="Bold" Margin="5" Text=""/>
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="DragOver">
+                                                <i:InvokeCommandAction Command="{Binding CommandDragOver}" CommandParameter="{Binding ElementName=c2}"/>
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="PreviewMouseDown">
+                                                <i:InvokeCommandAction Command="{Binding CommandPreviewMouseDown}" CommandParameter="{Binding ElementName=c2}" />
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="PreviewMouseMove">
+                                                <i:InvokeCommandAction Command="{Binding CommandPreviewMouseMove}" CommandParameter="{Binding ElementName=c2}" />
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="PreviewMouseUp">
+                                                <i:InvokeCommandAction Command="{Binding CommandPreviewMouseUp}" CommandParameter="{Binding ElementName=c2}" />
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="Drop">
+                                                <i:InvokeCommandAction Command="{Binding CommandDrop}" CommandParameter="{Binding ElementName=c2}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </Canvas>
+                                </DockPanel>
+
+
+                                <DockPanel Grid.Column="2" Grid.Row="1" Margin="5">
+                                    <Button Content="OSLOBODI" FontWeight="Bold" Command="{Binding CommandRemoveFromGrid}" CommandParameter="{Binding ElementName=c3}" DockPanel.Dock="Bottom" FontSize="16" Background="{StaticResource UIRedColor}">
+                                        <Button.Resources>
+                                            <Style TargetType="{x:Type Border}">
+                                                <Setter Property="CornerRadius" Value="4"/>
+                                            </Style>
+                                        </Button.Resources>
+                                    </Button>
+                                    <Canvas Background="White" AllowDrop="True" x:Name="c3">
+                                        <TextBlock FontSize="14" FontWeight="Bold" Margin="5" Text=""/>
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="DragOver">
+                                                <i:InvokeCommandAction Command="{Binding CommandDragOver}" CommandParameter="{Binding ElementName=c3}"/>
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="PreviewMouseDown">
+                                                <i:InvokeCommandAction Command="{Binding CommandPreviewMouseDown}" CommandParameter="{Binding ElementName=c3}" />
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="PreviewMouseMove">
+                                                <i:InvokeCommandAction Command="{Binding CommandPreviewMouseMove}" CommandParameter="{Binding ElementName=c3}" />
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="PreviewMouseUp">
+                                                <i:InvokeCommandAction Command="{Binding CommandPreviewMouseUp}" CommandParameter="{Binding ElementName=c3}" />
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="Drop">
+                                                <i:InvokeCommandAction Command="{Binding CommandDrop}" CommandParameter="{Binding ElementName=c3}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </Canvas>
+                                </DockPanel>
+
+
+                                <DockPanel Grid.Column="3" Grid.Row="1" Margin="5">
+                                    <Button Content="OSLOBODI" FontWeight="Bold" Command="{Binding CommandRemoveFromGrid}" CommandParameter="{Binding ElementName=c4}" DockPanel.Dock="Bottom" FontSize="16" Background="{StaticResource UIRedColor}">
+                                        <Button.Resources>
+                                            <Style TargetType="{x:Type Border}">
+                                                <Setter Property="CornerRadius" Value="4"/>
+                                            </Style>
+                                        </Button.Resources>
+                                    </Button>
+                                    <Canvas Background="White" AllowDrop="True" x:Name="c4">
+                                        <TextBlock FontSize="14" FontWeight="Bold" Margin="5" Text=""/>
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="DragOver">
+                                                <i:InvokeCommandAction Command="{Binding CommandDragOver}" CommandParameter="{Binding ElementName=c4}"/>
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="PreviewMouseDown">
+                                                <i:InvokeCommandAction Command="{Binding CommandPreviewMouseDown}" CommandParameter="{Binding ElementName=c4}" />
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="PreviewMouseMove">
+                                                <i:InvokeCommandAction Command="{Binding CommandPreviewMouseMove}" CommandParameter="{Binding ElementName=c4}" />
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="PreviewMouseUp">
+                                                <i:InvokeCommandAction Command="{Binding CommandPreviewMouseUp}" CommandParameter="{Binding ElementName=c4}" />
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="Drop">
+                                                <i:InvokeCommandAction Command="{Binding CommandDrop}" CommandParameter="{Binding ElementName=c4}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </Canvas>
+                                </DockPanel>
+
+                                <DockPanel Grid.Column="0" Grid.Row="2" Margin="5">
+                                    <Button Content="OSLOBODI" FontWeight="Bold" Command="{Binding CommandRemoveFromGrid}" CommandParameter="{Binding ElementName=c5}" DockPanel.Dock="Bottom" FontSize="16" Background="{StaticResource UIRedColor}">
+                                        <Button.Resources>
+                                            <Style TargetType="{x:Type Border}">
+                                                <Setter Property="CornerRadius" Value="4"/>
+                                            </Style>
+                                        </Button.Resources>
+                                    </Button>
+                                    <Canvas Background="White" AllowDrop="True" x:Name="c5">
+                                        <TextBlock FontSize="14" FontWeight="Bold" Margin="5" Text=""/>
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="DragOver">
+                                                <i:InvokeCommandAction Command="{Binding CommandDragOver}" CommandParameter="{Binding ElementName=c5}"/>
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="PreviewMouseDown">
+                                                <i:InvokeCommandAction Command="{Binding CommandPreviewMouseDown}" CommandParameter="{Binding ElementName=c5}" />
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="PreviewMouseMove">
+                                                <i:InvokeCommandAction Command="{Binding CommandPreviewMouseMove}" CommandParameter="{Binding ElementName=c5}" />
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="PreviewMouseUp">
+                                                <i:InvokeCommandAction Command="{Binding CommandPreviewMouseUp}" CommandParameter="{Binding ElementName=c5}" />
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="Drop">
+                                                <i:InvokeCommandAction Command="{Binding CommandDrop}" CommandParameter="{Binding ElementName=c5}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </Canvas>
+                                </DockPanel>
+
+
+                                <DockPanel Grid.Column="1" Grid.Row="2" Margin="5">
+                                    <Button Content="OSLOBODI" FontWeight="Bold" Command="{Binding CommandRemoveFromGrid}" CommandParameter="{Binding ElementName=c6}" DockPanel.Dock="Bottom" FontSize="16" Background="{StaticResource UIRedColor}">
+                                        <Button.Resources>
+                                            <Style TargetType="{x:Type Border}">
+                                                <Setter Property="CornerRadius" Value="4"/>
+                                            </Style>
+                                        </Button.Resources>
+                                    </Button>
+                                    <Canvas Background="White" AllowDrop="True" x:Name="c6">
+                                        <TextBlock FontSize="14" FontWeight="Bold" Margin="5" Text=""/>
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="DragOver">
+                                                <i:InvokeCommandAction Command="{Binding CommandDragOver}" CommandParameter="{Binding ElementName=c6}"/>
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="PreviewMouseDown">
+                                                <i:InvokeCommandAction Command="{Binding CommandPreviewMouseDown}" CommandParameter="{Binding ElementName=c6}" />
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="PreviewMouseMove">
+                                                <i:InvokeCommandAction Command="{Binding CommandPreviewMouseMove}" CommandParameter="{Binding ElementName=c6}" />
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="PreviewMouseUp">
+                                                <i:InvokeCommandAction Command="{Binding CommandPreviewMouseUp}" CommandParameter="{Binding ElementName=c6}" />
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="Drop">
+                                                <i:InvokeCommandAction Command="{Binding CommandDrop}" CommandParameter="{Binding ElementName=c6}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </Canvas>
+                                </DockPanel>
+
+                                <DockPanel Grid.Column="2" Grid.Row="2" Margin="5">
+                                    <Button Content="OSLOBODI" FontWeight="Bold" Command="{Binding CommandRemoveFromGrid}" CommandParameter="{Binding ElementName=c7}" DockPanel.Dock="Bottom" FontSize="16" Background="{StaticResource UIRedColor}">
+                                        <Button.Resources>
+                                            <Style TargetType="{x:Type Border}">
+                                                <Setter Property="CornerRadius" Value="4"/>
+                                            </Style>
+                                        </Button.Resources>
+                                    </Button>
+                                    <Canvas Background="White" AllowDrop="True" x:Name="c7">
+                                        <TextBlock FontSize="14" FontWeight="Bold" Margin="5" Text=""/>
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="DragOver">
+                                                <i:InvokeCommandAction Command="{Binding CommandDragOver}" CommandParameter="{Binding ElementName=c7}"/>
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="PreviewMouseDown">
+                                                <i:InvokeCommandAction Command="{Binding CommandPreviewMouseDown}" CommandParameter="{Binding ElementName=c7}" />
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="PreviewMouseMove">
+                                                <i:InvokeCommandAction Command="{Binding CommandPreviewMouseMove}" CommandParameter="{Binding ElementName=c7}" />
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="PreviewMouseUp">
+                                                <i:InvokeCommandAction Command="{Binding CommandPreviewMouseUp}" CommandParameter="{Binding ElementName=c7}" />
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="Drop">
+                                                <i:InvokeCommandAction Command="{Binding CommandDrop}" CommandParameter="{Binding ElementName=c7}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </Canvas>
+                                </DockPanel>
+
+                                <DockPanel Grid.Column="3" Grid.Row="2" Margin="5">
+                                    <Button Content="OSLOBODI" FontWeight="Bold" Command="{Binding CommandRemoveFromGrid}" CommandParameter="{Binding ElementName=c8}" DockPanel.Dock="Bottom" FontSize="16" Background="{StaticResource UIRedColor}">
+                                        <Button.Resources>
+                                            <Style TargetType="{x:Type Border}">
+                                                <Setter Property="CornerRadius" Value="4"/>
+                                            </Style>
+                                        </Button.Resources>
+                                    </Button>
+                                    <Canvas Background="White" AllowDrop="True" x:Name="c8">
+                                        <TextBlock FontSize="14" FontWeight="Bold" Margin="5" Text=""/>
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="DragOver">
+                                                <i:InvokeCommandAction Command="{Binding CommandDragOver}" CommandParameter="{Binding ElementName=c8}"/>
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="PreviewMouseDown">
+                                                <i:InvokeCommandAction Command="{Binding CommandPreviewMouseDown}" CommandParameter="{Binding ElementName=c8}" />
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="PreviewMouseMove">
+                                                <i:InvokeCommandAction Command="{Binding CommandPreviewMouseMove}" CommandParameter="{Binding ElementName=c8}" />
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="PreviewMouseUp">
+                                                <i:InvokeCommandAction Command="{Binding CommandPreviewMouseUp}" CommandParameter="{Binding ElementName=c8}" />
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="Drop">
+                                                <i:InvokeCommandAction Command="{Binding CommandDrop}" CommandParameter="{Binding ElementName=c8}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </Canvas>
+                                </DockPanel>
+
+                                <DockPanel Grid.Column="0" Grid.Row="3" Margin="5">
+                                    <Button Content="OSLOBODI" FontWeight="Bold" Command="{Binding CommandRemoveFromGrid}" CommandParameter="{Binding ElementName=c9}" DockPanel.Dock="Bottom" FontSize="16" Background="{StaticResource UIRedColor}">
+                                        <Button.Resources>
+                                            <Style TargetType="{x:Type Border}">
+                                                <Setter Property="CornerRadius" Value="4"/>
+                                            </Style>
+                                        </Button.Resources>
+                                    </Button>
+                                    <Canvas Background="White" AllowDrop="True" x:Name="c9">
+                                        <TextBlock FontSize="14" FontWeight="Bold" Margin="5" Text=""/>
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="DragOver">
+                                                <i:InvokeCommandAction Command="{Binding CommandDragOver}" CommandParameter="{Binding ElementName=c9}"/>
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="PreviewMouseDown">
+                                                <i:InvokeCommandAction Command="{Binding CommandPreviewMouseDown}" CommandParameter="{Binding ElementName=c9}" />
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="PreviewMouseMove">
+                                                <i:InvokeCommandAction Command="{Binding CommandPreviewMouseMove}" CommandParameter="{Binding ElementName=c9}" />
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="PreviewMouseUp">
+                                                <i:InvokeCommandAction Command="{Binding CommandPreviewMouseUp}" CommandParameter="{Binding ElementName=c9}" />
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="Drop">
+                                                <i:InvokeCommandAction Command="{Binding CommandDrop}" CommandParameter="{Binding ElementName=c9}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </Canvas>
+                                </DockPanel>
+
+                                <DockPanel Grid.Column="1" Grid.Row="3" Margin="5">
+                                    <Button Content="OSLOBODI" FontWeight="Bold" Command="{Binding CommandRemoveFromGrid}" CommandParameter="{Binding ElementName=c10}" DockPanel.Dock="Bottom" FontSize="16" Background="{StaticResource UIRedColor}">
+                                        <Button.Resources>
+                                            <Style TargetType="{x:Type Border}">
+                                                <Setter Property="CornerRadius" Value="4"/>
+                                            </Style>
+                                        </Button.Resources>
+                                    </Button>
+                                    <Canvas Background="White" AllowDrop="True" x:Name="c10">
+                                        <TextBlock FontSize="14" FontWeight="Bold" Margin="5" Text=""/>
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="DragOver">
+                                                <i:InvokeCommandAction Command="{Binding CommandDragOver}" CommandParameter="{Binding ElementName=c10}"/>
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="PreviewMouseDown">
+                                                <i:InvokeCommandAction Command="{Binding CommandPreviewMouseDown}" CommandParameter="{Binding ElementName=c10}" />
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="PreviewMouseMove">
+                                                <i:InvokeCommandAction Command="{Binding CommandPreviewMouseMove}" CommandParameter="{Binding ElementName=c10}" />
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="PreviewMouseUp">
+                                                <i:InvokeCommandAction Command="{Binding CommandPreviewMouseUp}" CommandParameter="{Binding ElementName=c10}" />
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="Drop">
+                                                <i:InvokeCommandAction Command="{Binding CommandDrop}" CommandParameter="{Binding ElementName=c10}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </Canvas>
+                                </DockPanel>
+
+
+                                <DockPanel Grid.Column="2" Grid.Row="3" Margin="5">
+                                    <Button Content="OSLOBODI" FontWeight="Bold" Command="{Binding CommandRemoveFromGrid}" CommandParameter="{Binding ElementName=c11}" DockPanel.Dock="Bottom" FontSize="16" Background="{StaticResource UIRedColor}">
+                                        <Button.Resources>
+                                            <Style TargetType="{x:Type Border}">
+                                                <Setter Property="CornerRadius" Value="4"/>
+                                            </Style>
+                                        </Button.Resources>
+                                    </Button>
+                                    <Canvas Background="White" AllowDrop="True" x:Name="c11">
+                                        <TextBlock FontSize="14" FontWeight="Bold" Margin="5" Text=""/>
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="DragOver">
+                                                <i:InvokeCommandAction Command="{Binding CommandDragOver}" CommandParameter="{Binding ElementName=c11}"/>
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="PreviewMouseDown">
+                                                <i:InvokeCommandAction Command="{Binding CommandPreviewMouseDown}" CommandParameter="{Binding ElementName=c11}" />
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="PreviewMouseMove">
+                                                <i:InvokeCommandAction Command="{Binding CommandPreviewMouseMove}" CommandParameter="{Binding ElementName=c11}" />
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="PreviewMouseUp">
+                                                <i:InvokeCommandAction Command="{Binding CommandPreviewMouseUp}" CommandParameter="{Binding ElementName=c11}" />
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="Drop">
+                                                <i:InvokeCommandAction Command="{Binding CommandDrop}" CommandParameter="{Binding ElementName=c11}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </Canvas>
+                                </DockPanel>
+
+                                <DockPanel Grid.Column="3" Grid.Row="3" Margin="5">
+                                    <Button Content="OSLOBODI" FontWeight="Bold" Command="{Binding CommandRemoveFromGrid}" CommandParameter="{Binding ElementName=c12}" DockPanel.Dock="Bottom" FontSize="16" Background="{StaticResource UIRedColor}">
+                                        <Button.Resources>
+                                            <Style TargetType="{x:Type Border}">
+                                                <Setter Property="CornerRadius" Value="4"/>
+                                            </Style>
+                                        </Button.Resources>
+                                    </Button>
+                                    <Canvas Background="White" AllowDrop="True" x:Name="c12">
+                                        <TextBlock FontSize="14" FontWeight="Bold" Margin="5" Text=""/>
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="DragOver">
+                                                <i:InvokeCommandAction Command="{Binding CommandDragOver}" CommandParameter="{Binding ElementName=c12}"/>
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="PreviewMouseDown">
+                                                <i:InvokeCommandAction Command="{Binding CommandPreviewMouseDown}" CommandParameter="{Binding ElementName=c12}" />
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="PreviewMouseMove">
+                                                <i:InvokeCommandAction Command="{Binding CommandPreviewMouseMove}" CommandParameter="{Binding ElementName=c12}" />
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="PreviewMouseUp">
+                                                <i:InvokeCommandAction Command="{Binding CommandPreviewMouseUp}" CommandParameter="{Binding ElementName=c12}" />
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="Drop">
+                                                <i:InvokeCommandAction Command="{Binding CommandDrop}" CommandParameter="{Binding ElementName=c12}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </Canvas>
+                                </DockPanel>
+
+                                <DockPanel Grid.Column="0" Grid.Row="4" Margin="5">
+                                    <Button Content="OSLOBODI" FontWeight="Bold" Command="{Binding CommandRemoveFromGrid}" CommandParameter="{Binding ElementName=c13}" DockPanel.Dock="Bottom" FontSize="16" Background="{StaticResource UIRedColor}">
+                                        <Button.Resources>
+                                            <Style TargetType="{x:Type Border}">
+                                                <Setter Property="CornerRadius" Value="4"/>
+                                            </Style>
+                                        </Button.Resources>
+                                    </Button>
+                                    <Canvas Background="White" AllowDrop="True" x:Name="c13">
+                                        <TextBlock FontSize="14" FontWeight="Bold" Margin="5" Text=""/>
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="DragOver">
+                                                <i:InvokeCommandAction Command="{Binding CommandDragOver}" CommandParameter="{Binding ElementName=c13}"/>
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="PreviewMouseDown">
+                                                <i:InvokeCommandAction Command="{Binding CommandPreviewMouseDown}" CommandParameter="{Binding ElementName=c13}" />
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="PreviewMouseMove">
+                                                <i:InvokeCommandAction Command="{Binding CommandPreviewMouseMove}" CommandParameter="{Binding ElementName=c13}" />
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="PreviewMouseUp">
+                                                <i:InvokeCommandAction Command="{Binding CommandPreviewMouseUp}" CommandParameter="{Binding ElementName=c13}" />
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="Drop">
+                                                <i:InvokeCommandAction Command="{Binding CommandDrop}" CommandParameter="{Binding ElementName=c13}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </Canvas>
+                                </DockPanel>
+
+                                <DockPanel Grid.Column="1" Grid.Row="4" Margin="5">
+                                    <Button Content="OSLOBODI" FontWeight="Bold" Command="{Binding CommandRemoveFromGrid}" CommandParameter="{Binding ElementName=c14}" DockPanel.Dock="Bottom" FontSize="16" Background="{StaticResource UIRedColor}">
+                                        <Button.Resources>
+                                            <Style TargetType="{x:Type Border}">
+                                                <Setter Property="CornerRadius" Value="4"/>
+                                            </Style>
+                                        </Button.Resources>
+                                    </Button>
+                                    <Canvas Background="White" AllowDrop="True" x:Name="c14">
+                                        <TextBlock FontSize="14" FontWeight="Bold" Margin="5" Text=""/>
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="DragOver">
+                                                <i:InvokeCommandAction Command="{Binding CommandDragOver}" CommandParameter="{Binding ElementName=c14}"/>
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="PreviewMouseDown">
+                                                <i:InvokeCommandAction Command="{Binding CommandPreviewMouseDown}" CommandParameter="{Binding ElementName=c14}" />
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="PreviewMouseMove">
+                                                <i:InvokeCommandAction Command="{Binding CommandPreviewMouseMove}" CommandParameter="{Binding ElementName=c14}" />
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="PreviewMouseUp">
+                                                <i:InvokeCommandAction Command="{Binding CommandPreviewMouseUp}" CommandParameter="{Binding ElementName=c14}" />
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="Drop">
+                                                <i:InvokeCommandAction Command="{Binding CommandDrop}" CommandParameter="{Binding ElementName=c14}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </Canvas>
+                                </DockPanel>
+
+                                <DockPanel Grid.Column="2" Grid.Row="4" Margin="5">
+                                    <Button Content="OSLOBODI" FontWeight="Bold" Command="{Binding CommandRemoveFromGrid}" CommandParameter="{Binding ElementName=c15}" DockPanel.Dock="Bottom" FontSize="16" Background="{StaticResource UIRedColor}">
+                                        <Button.Resources>
+                                            <Style TargetType="{x:Type Border}">
+                                                <Setter Property="CornerRadius" Value="4"/>
+                                            </Style>
+                                        </Button.Resources>
+                                    </Button>
+                                    <Canvas Background="White" AllowDrop="True" x:Name="c15">
+                                        <TextBlock FontSize="14" FontWeight="Bold" Margin="5" Text=""/>
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="DragOver">
+                                                <i:InvokeCommandAction Command="{Binding CommandDragOver}" CommandParameter="{Binding ElementName=c15}"/>
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="PreviewMouseDown">
+                                                <i:InvokeCommandAction Command="{Binding CommandPreviewMouseDown}" CommandParameter="{Binding ElementName=c15}" />
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="PreviewMouseMove">
+                                                <i:InvokeCommandAction Command="{Binding CommandPreviewMouseMove}" CommandParameter="{Binding ElementName=c15}" />
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="PreviewMouseUp">
+                                                <i:InvokeCommandAction Command="{Binding CommandPreviewMouseUp}" CommandParameter="{Binding ElementName=c15}" />
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="Drop">
+                                                <i:InvokeCommandAction Command="{Binding CommandDrop}" CommandParameter="{Binding ElementName=c15}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </Canvas>
+                                </DockPanel>
+
+                                <DockPanel Grid.Column="3" Grid.Row="4" Margin="5">
+                                    <Button Content="OSLOBODI" FontWeight="Bold" Command="{Binding CommandRemoveFromGrid}" CommandParameter="{Binding ElementName=c16}" DockPanel.Dock="Bottom" FontSize="16" Background="{StaticResource UIRedColor}">
+                                        <Button.Resources>
+                                            <Style TargetType="{x:Type Border}">
+                                                <Setter Property="CornerRadius" Value="4"/>
+                                            </Style>
+                                        </Button.Resources>
+                                    </Button>
+                                    <Canvas Background="White" AllowDrop="True" x:Name="c16">
+                                        <TextBlock FontSize="14" FontWeight="Bold" Margin="5" Text=""/>
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="DragOver">
+                                                <i:InvokeCommandAction Command="{Binding CommandDragOver}" CommandParameter="{Binding ElementName=c16}"/>
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="PreviewMouseDown">
+                                                <i:InvokeCommandAction Command="{Binding CommandPreviewMouseDown}" CommandParameter="{Binding ElementName=c16}" />
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="PreviewMouseMove">
+                                                <i:InvokeCommandAction Command="{Binding CommandPreviewMouseMove}" CommandParameter="{Binding ElementName=c16}" />
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="PreviewMouseUp">
+                                                <i:InvokeCommandAction Command="{Binding CommandPreviewMouseUp}" CommandParameter="{Binding ElementName=c16}" />
+                                            </i:EventTrigger>
+                                            <i:EventTrigger EventName="Drop">
+                                                <i:InvokeCommandAction Command="{Binding CommandDrop}" CommandParameter="{Binding ElementName=c16}"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </Canvas>
+                                </DockPanel>
+
                             </Grid>
                         </Border>
                     </Grid>

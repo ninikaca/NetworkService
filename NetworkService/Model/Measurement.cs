@@ -5,7 +5,7 @@ namespace NetworkService.Model
     public class Measurement : BindableBase
     {
         //polja klase
-        private int measured;
+        private int measured, doubleMax;
         private bool outOfRange;
 
         public Measurement()
@@ -24,6 +24,7 @@ namespace NetworkService.Model
             {
                 if (measured != value)
                 {
+                    DoubleMax = measured * 4;
                     measured = value;
                     OnPropertyChanged("Measured");
                 }
@@ -54,6 +55,23 @@ namespace NetworkService.Model
                 {
                     outOfRange = value;
                     OnPropertyChanged("OutOfRange");
+                }
+            }
+        }
+
+        public int DoubleMax
+        {
+            get
+            {
+                return doubleMax;
+            }
+
+            set
+            {
+                if(doubleMax != value)
+                {
+                    doubleMax = value;
+                    OnPropertyChanged("DoubleMax");
                 }
             }
         }

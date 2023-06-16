@@ -36,8 +36,6 @@ namespace NetworkService.ViewModel
 
         public MainWindowViewModel()
         {
-            createListener(); //Povezivanje sa serverskom aplikacijom
-
             // komanda za navigaciju
             NavCommand = new MyICommand<string>(OnNav);
             CloseWindowCommand = new MyICommand<Window>(CloseWindow);
@@ -53,7 +51,7 @@ namespace NetworkService.ViewModel
             entitiesViewModel = new EntitiesViewModel();
 
             //testiranje kroz 15 primera
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 5; i++)
             {
                 entitiesViewModel.CheckAdd();
             }
@@ -69,6 +67,8 @@ namespace NetworkService.ViewModel
             {
                 File.Delete("log.txt");
             }
+
+            createListener(); //Povezivanje sa serverskom aplikacijom
 
             graphsViewModel.UpdateMeasurement();
         }
@@ -93,7 +93,7 @@ namespace NetworkService.ViewModel
         //tcp konekcija
         private void createListener()
         {
-            var tcp = new TcpListener(IPAddress.Any, new Random().Next(20000,30000));
+            var tcp = new TcpListener(IPAddress.Any, 25565);
             tcp.Start();
 
             var listeningThread = new Thread(() =>

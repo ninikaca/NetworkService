@@ -150,7 +150,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\uredjaj.png" />
+    <Content Include="Assets\uredjaj.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="Assets\uredjaj_error.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\menu1.png" />

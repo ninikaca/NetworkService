@@ -31,7 +31,7 @@
                 <Border  Grid.Row="1" Margin="15,20,15,25" Background="Transparent" CornerRadius="20">
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="294*"/>
+                            <RowDefinition Height="450*"/>
                             <RowDefinition Height="20*"/>
                             <RowDefinition Height="17*"/>
                             <RowDefinition Height="225*"/>
@@ -43,7 +43,7 @@
 
                         <!-- Table -->
                         <Border Grid.Row="0" Grid.ColumnSpan="2"  Margin="0,0,0,15" Background="White" CornerRadius="20" Grid.RowSpan="2">
-                            <DataGrid CanUserSortColumns="False" CanUserResizeColumns="False" SelectionMode="Single" SelectionUnit="FullRow"  AutoGenerateColumns="False" IsReadOnly="True" Margin="10" TextBlock.FontSize="25" TextBlock.FontFamily="Roboto" TextBlock.TextAlignment="Center" ItemsSource="{Binding ListOfEntities}" SelectedItem="{Binding chosenEntity}">
+                            <DataGrid CanUserSortColumns="False" CanUserResizeColumns="False" SelectionMode="Single" SelectionUnit="FullRow"  AutoGenerateColumns="False" IsReadOnly="True" Margin="10" TextBlock.FontSize="25" TextBlock.FontFamily="Roboto" TextBlock.TextAlignment="Center" ItemsSource="{Binding ListOfEntities}" SelectedItem="{Binding ChosenEntity}">
                                 
                                 <DataGrid.Resources>
                                     <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="LightGray" />
@@ -74,7 +74,7 @@
                         <Border  Grid.Row="2" Background="White" CornerRadius="20" Grid.RowSpan="2">
                             <StackPanel TextBlock.FontSize="25" TextBlock.FontFamily="Roboto" TextBlock.TextAlignment="Center" Margin="15">
                                 <TextBlock Text="EDIT ENTITIES" FontWeight="Bold"/>
-                                <ComboBox FontSize="20" Margin="20" Height="40" ItemsSource="{Binding Addresses}" />
+                                <ComboBox FontSize="20" Margin="20" SelectedIndex="{Binding ChosenId_Add}" Height="40" ItemsSource="{Binding Address}" />
 
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -82,8 +82,8 @@
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
 
-                                    <Button x:Name="AddEntitieButton" Content="ADD" Height="70" Width="200" Grid.Column="0" Style="{StaticResource AddButtonStyle}" />
-                                    <Button x:Name="DeleteEntitieButton" Content="DELETE" Height="70" Width="200" Grid.Column="1" Style="{StaticResource DeleteButtonStyle}" />
+                                    <Button x:Name="AddEntitieButton" Command="{Binding CommandAdd}" Content="ADD" Height="70" Width="200" Grid.Column="0" Style="{StaticResource AddButtonStyle}" />
+                                    <Button x:Name="DeleteEntitieButton" Command="{Binding CommandDelete}" Content="DELETE" Height="70" Width="200" Grid.Column="1" Style="{StaticResource DeleteButtonStyle}" />
                                 </Grid>
                                 <TextBlock Text="deleting an entity is an irreversible action" FontSize="12" Padding="8" FontStyle="Italic" />
                             </StackPanel>
@@ -102,12 +102,12 @@
                                         <ColumnDefinition Width="3*"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <ComboBox FontSize="20" Margin="0,20,0,0" Height="40" ItemsSource="{Binding Addresses}" SelectedIndex="{Binding chosenClassesAddresses}" Grid.Column="0"/>
+                                    <ComboBox FontSize="20" Margin="0,20,0,0" Height="40" ItemsSource="{Binding Address}" SelectedIndex="{Binding ChosenClassesAddresses}" Grid.Column="0"/>
 
                                     <TextBlock Text="ID:" Margin="20,25,20,0" HorizontalAlignment="Left" Grid.Column="1"/>
                                     <TextBox x:Name="FilterByID" Margin="55,20,0,0" Grid.Column="1" FontSize="20" MaxLength="5" Text="{Binding CurrentID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
-                                    <TextBlock Text="RELATION TO ID:" Margin="20,25,20,0" HorizontalAlignment="Left" Grid.Column="2"/>
+                                    <TextBlock Text="RELATION TO ID:" Margin="40,25,20,0" HorizontalAlignment="Left" Grid.Column="2"/>
                                     
                                     <Viewbox Margin="100,20,0,0" Height="30" Grid.Column="2">
                                         <RadioButton Content="&lt;" IsChecked="{Binding LessIsChecked}" />
@@ -121,7 +121,7 @@
                                 </Grid>
 
                                 <!-- Drugi red / samo search -->
-                                <Button x:Name="SearchFilterButton" Content="SEARCH" Margin="0,20,0,0" Height="40" Width="500" Command="{Binding CommandFilter}" Style="{StaticResource SearchButtonStyle}"/>
+                                <Button x:Name="SearchFilterButton" Content="SEARCH" Margin="0,20,0,0" Height="40" Width="600" Command="{Binding CommandFilter}" Style="{StaticResource SearchButtonStyle}"/>
 
                                 <!-- Treci red / istorija filtera -->
                                 <Grid>
@@ -130,8 +130,8 @@
                                         <ColumnDefinition Width="1.4*"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <TextBlock Text="FILTER HISTORY:" Margin="130,25,0,0" Grid.Column="0"/>
-                                    <ComboBox FontSize="20" Margin="0,20,135,0" Height="40" ItemsSource="{Binding Addresses}" SelectedIndex="{Binding chosenClassesAddresses}" Grid.Column="1"/>
+                                    <TextBlock Text="FILTER HISTORY:" Margin="110,25,0,0" Grid.Column="0"/>
+                                    <ComboBox FontSize="20" Margin="0,20,145,0" Height="40" ItemsSource="{Binding HistoryOfFilter}" SelectedItem="{Binding ChosenFilter}" Grid.Column="1"/>
                                 </Grid>
                             </StackPanel>
                         </Border>
